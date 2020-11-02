@@ -39,17 +39,42 @@ namespace MainServerAPI.Network
                 requestOperation = RequestOperationEnum.PROFILE,
             
             });
+            Request request = WriteAndReadFromServer(s);
+            Console.WriteLine(request == null);
+            ProfileData profileData = JsonSerializer.Deserialize<ProfileData>(request.o.ToString());
+            return profileData;
+        }
+
+        private Request WriteAndReadFromServer(string s)
+        {
             byte[] dataToServer = Encoding.ASCII.GetBytes(s);
             stream.Write(dataToServer, 0, dataToServer.Length);
             byte[] fromServer = new byte[1024];
             int bytesRead = stream.Read(fromServer, 0, fromServer.Length);
-            
+
             //Tar Imod Profile gennem sockets
             string response = Encoding.ASCII.GetString(fromServer, 0, bytesRead);
             Console.WriteLine(response);
             Request request = JsonSerializer.Deserialize<Request>(response);
-            ProfileData profileData = JsonSerializer.Deserialize<ProfileData>(request.o.ToString());
-            return profileData;
+            return request;
+
+        }
+
+        public Byte[] GetCover(string username)
+        {
+            string s = JsonSerializer.Serialize<Request>(new Request()
+            {
+                Username =  username,
+                requestOperation = RequestOperationEnum.COVER
+            });
+            
+            byte[] dataToServer = Encoding.ASCII.GetBytes(s);
+            stream.Write(dataToServer, 0, dataToServer.Length);
+            
+            
+            byte[] fromServer = new byte[16*1024];
+            stream.Read(fromServer, 0, fromServer.Length);
+            return fromServer;
         }
     }
 }

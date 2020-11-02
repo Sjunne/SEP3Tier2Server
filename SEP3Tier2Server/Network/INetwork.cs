@@ -1,4 +1,5 @@
-﻿﻿using MainServerAPI.Data;
+﻿﻿using System;
+ using MainServerAPI.Data;
 
 namespace MainServerAPI.Network
 {
@@ -6,5 +7,7 @@ namespace MainServerAPI.Network
     {
         void updateProfile(ProfileData profile);
         ProfileData GetProfile(string username);
+
+        Byte[] GetCover(string username);
     }
 }

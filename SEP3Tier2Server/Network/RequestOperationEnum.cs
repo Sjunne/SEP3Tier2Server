@@ -7,6 +7,7 @@ namespace MainServerAPI.Network
     public enum RequestOperationEnum
     {
         EDITINTRODUCTION,
-        PROFILE
+        PROFILE, 
+        COVER
     }
 }
