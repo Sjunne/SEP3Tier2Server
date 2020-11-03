@@ -8,6 +8,7 @@ namespace MainServerAPI.Network
     {
         EDITINTRODUCTION,
         PROFILE, 
-        COVER
+        COVER,
+        PICTURES
     }
 }
