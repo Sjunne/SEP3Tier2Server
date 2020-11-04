@@ -98,13 +98,13 @@ namespace MainServerAPI.Network
             byte[] fromServer = new byte[1024];
             stream.Read(fromServer, 0, fromServer.Length);
             string from = Encoding.ASCII.GetString(fromServer);
-            
+
             int count = Int32.Parse(from);
             for (int i = 0; i < count; i++)
             {
-                byte[] read = new byte[16*1024];
-                stream.Read(fromServer, 0, fromServer.Length);
-                Console.WriteLine(read.ToString());
+                byte[] read = new byte[1024*1024];
+                stream.Read(read, 0, read.Length);
+
                 bytes.Add(read);
             }
 

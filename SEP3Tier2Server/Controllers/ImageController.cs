@@ -38,16 +38,16 @@ namespace MainServerAPI.Controllers
         {
             List<Byte[]> b = _network.GetPictures(username);
             
-            
-            List<string> strings = new List<string>();
+            string allImages = "";
             for (int i = 0; i < b.Count; i++)
             {
                 string image = Convert.ToBase64String(b[i]);
-                strings.Add(String.Format("data:image/gif;base64,{0}", image));
+                string encoded = String.Format("data:image/gif;base64,{0}", image);
+                allImages += encoded;
+                allImages += "å";
             }
-            
-            string serialize = JsonSerializer.Serialize<List<string>>(strings);
-            return serialize;
+
+            return allImages;
         }
 
     }
