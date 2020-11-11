@@ -35,14 +35,13 @@ namespace MainServerAPI.Controllers
         [HttpPost]
         public async Task<ActionResult<Request>> UploadImage([FromBody] Request request)
         {
-            Console.WriteLine("hey");
             _network.UploadImage(request);
             return Created($"/added", request);
         }
 
         [HttpGet]
         [Route("All")]
-        public async Task<string> GetPictures(string username)
+        public async Task<string> GetPictures([FromQuery] string username)
         {
             List<Byte[]> b = _network.GetPictures(username);
             
