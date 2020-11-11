@@ -7,6 +7,7 @@ using System.Threading;
 using MainServerAPI.Data;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.VisualBasic.CompilerServices;
+using SEP3Tier2Server.Exceptions;
 
 namespace MainServerAPI.Network
 {
@@ -42,8 +43,11 @@ namespace MainServerAPI.Network
                 
             });
             Request request = WriteAndReadFromServer(s);
-            Console.WriteLine(request == null);
             ProfileData profileData = JsonSerializer.Deserialize<ProfileData>(request.o.ToString());
+            if (profileData == null)
+            {
+                throw new NetworkIssue("ProfileData was null");
+            }
             return profileData;
         }
 
@@ -52,8 +56,6 @@ namespace MainServerAPI.Network
         public Byte[] GetCover(string username)
         {
             var stream = NetworkStream();
-
-            
             
             string s = JsonSerializer.Serialize<Request>(new Request()
             {
@@ -67,6 +69,10 @@ namespace MainServerAPI.Network
             
             byte[] fromServer = new byte[16*1024];
             stream.Read(fromServer, 0, fromServer.Length);
+            if (fromServer[0] == 0)
+            {
+                throw new NetworkIssue("Cover-byte array was empty");
+            }
             return fromServer;
         }
 
@@ -99,6 +105,11 @@ namespace MainServerAPI.Network
                 list.Add(TrimEmptyBytes(read));
             }
             
+            if (fromServer[0] == 0)
+            {
+                throw new NetworkIssue("Cover-byte array was empty");
+            }
+            
             return list;
         }
 
@@ -122,11 +133,6 @@ namespace MainServerAPI.Network
             Array.Copy(array, bar, i+1);
             return bar;
         }
-
-        
-        
-        
-        
         
         
         //Metoder til optimering
@@ -134,8 +140,7 @@ namespace MainServerAPI.Network
         {
             var stream = NetworkStream();
 
-            
-            
+
             byte[] dataToServer = Encoding.ASCII.GetBytes(s);
             stream.Write(dataToServer, 0, dataToServer.Length);
             byte[] fromServer = new byte[1024];
@@ -152,8 +157,23 @@ namespace MainServerAPI.Network
         
         private static NetworkStream NetworkStream()
         {
-            TcpClient tcpClient = new TcpClient("127.0.0.1", 6000);
-            NetworkStream stream = tcpClient.GetStream();
+            NetworkStream stream;
+
+            try
+            {
+                TcpClient tcpClient = new TcpClient("127.0.0.1", 6000);
+                stream = tcpClient.GetStream();
+
+            }
+            catch (InvalidCastException)
+            {
+                throw new NetworkIssue("No connection to tier 3");
+            }
+            catch (SocketException e)
+            {
+                throw new NetworkIssue("Tier 3 not started");
+            }
+            
             return stream;
         }
     }
