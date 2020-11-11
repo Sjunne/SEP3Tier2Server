@@ -86,22 +86,34 @@ namespace MainServerAPI.Network
             
             
             
-            List<byte[]> bytes = new List<byte[]>();
+            List<byte[]> list = new List<byte[]>();
             
             byte[] fromServer = new byte[1024];
             stream.Read(fromServer, 0, fromServer.Length);
             string from = Encoding.ASCII.GetString(fromServer);
-
+            
             int count = Int32.Parse(from);
             for (int i = 0; i < count; i++)
             {
                 byte[] read = new byte[1024*1024];
                 stream.Read(read, 0, read.Length);
+                list.Add(TrimEmptyBytes(read));
+            }
+            
+            return list;
+        }
 
-                bytes.Add(read);
+        public byte[] TrimEmptyBytes(byte[] array)
+        {
+            int i = array.Length - 1;
+            while (array[i] == 0)
+            {
+                --i;
             }
 
-            return bytes;
+            byte[] bar = new byte[i + 1];
+            Array.Copy(array, bar, i+1);
+            return bar;
         }
 
         
