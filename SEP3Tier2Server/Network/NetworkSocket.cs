@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Net.Sockets;
 using System.Text;
 using System.Text.Json;
+using System.Threading;
 using MainServerAPI.Data;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.VisualBasic.CompilerServices;
@@ -99,7 +100,7 @@ namespace MainServerAPI.Network
             stream.Read(fromServer, 0, fromServer.Length);
             string from = Encoding.ASCII.GetString(fromServer);
             
-            int count = Int32.Parse(from);
+            int count = Int32.Parse(from.ToCharArray()[0].ToString());
             for (int i = 0; i < count; i++)
             {
                 byte[] read = new byte[1024*1024];

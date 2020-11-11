@@ -32,6 +32,14 @@ namespace MainServerAPI.Controllers
             return imgSrc;
         }
 
+        [HttpPost]
+        //[Route("Upload")]
+        public async Task UploadImage([FromBody] String request)
+        {
+            Request deserialize = JsonSerializer.Deserialize<Request>(request);
+            Console.WriteLine(deserialize.o);
+        }
+
         [HttpGet]
         [Route("All")]
         public async Task<string> GetPictures(string username)
