@@ -93,7 +93,7 @@ namespace MainServerAPI.Network
             
             
             
-            List<byte[]> bytes = new List<byte[]>();
+            List<byte[]> list = new List<byte[]>();
             
             byte[] fromServer = new byte[1024];
             stream.Read(fromServer, 0, fromServer.Length);
@@ -104,10 +104,23 @@ namespace MainServerAPI.Network
             {
                 byte[] read = new byte[1024*1024];
                 stream.Read(read, 0, read.Length);
-                bytes.Add(read);
+                list.Add(TrimEmptyBytes(read));
+            }
+            
+            return list;
+        }
+
+        public byte[] TrimEmptyBytes(byte[] array)
+        {
+            int i = array.Length - 1;
+            while (array[i] == 0)
+            {
+                --i;
             }
 
-            return bytes;
+            byte[] bar = new byte[i + 1];
+            Array.Copy(array, bar, i+1);
+            return bar;
         }
     }
 }
