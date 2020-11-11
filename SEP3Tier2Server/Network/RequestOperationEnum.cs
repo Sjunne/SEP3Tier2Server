@@ -1,4 +1,4 @@
-﻿﻿using System.Text.Json.Serialization;
+﻿using System.Text.Json.Serialization;
 
 namespace MainServerAPI.Network
 {
@@ -9,6 +9,7 @@ namespace MainServerAPI.Network
         EDITINTRODUCTION,
         PROFILE, 
         COVER,
-        PICTURES
+        PICTURES,
+        UPLOADPICTURE
     }
 }

@@ -9,7 +9,8 @@ namespace MainServerAPI.Network
         void updateProfile(ProfileData profile);
         ProfileData GetProfile(string username);
 
-        Byte[] GetCover(string username);
+        byte[] GetCover(string username);
         List<byte[]> GetPictures(string username);
+        void UploadImage(Request request);
     }
 }

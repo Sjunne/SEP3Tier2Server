@@ -12,8 +12,6 @@ namespace MainServerAPI.Network
 {
     public class NetworkSocket : INetwork
     {
-        
-
         public NetworkSocket()
         {
             
@@ -104,7 +102,15 @@ namespace MainServerAPI.Network
             return list;
         }
 
-        public byte[] TrimEmptyBytes(byte[] array)
+        public void UploadImage(Request request)
+        {
+            var stream = NetworkStream();
+            string json = JsonSerializer.Serialize(request);
+            byte[] toServer = Encoding.ASCII.GetBytes(json);
+            stream.Write(toServer, 0, toServer.Length);
+        }
+
+        private byte[] TrimEmptyBytes(byte[] array)
         {
             int i = array.Length - 1;
             while (array[i] == 0)

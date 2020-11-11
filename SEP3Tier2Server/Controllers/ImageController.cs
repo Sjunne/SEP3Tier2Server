@@ -33,11 +33,11 @@ namespace MainServerAPI.Controllers
         }
 
         [HttpPost]
-        //[Route("Upload")]
-        public async Task UploadImage([FromBody] String request)
+        public async Task<ActionResult<Request>> UploadImage([FromBody] Request request)
         {
-            Request deserialize = JsonSerializer.Deserialize<Request>(request);
-            Console.WriteLine(deserialize.o);
+            Console.WriteLine("hey");
+            _network.UploadImage(request);
+            return Created($"/added", request);
         }
 
         [HttpGet]
