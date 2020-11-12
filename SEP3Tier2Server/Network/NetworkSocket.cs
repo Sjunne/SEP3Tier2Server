@@ -121,6 +121,14 @@ namespace MainServerAPI.Network
             stream.Write(toServer, 0, toServer.Length);
         }
 
+        public void editProfile(Request request)
+        {
+            var stream = NetworkStream();
+            string json = JsonSerializer.Serialize(request);
+            byte[] toServer = Encoding.ASCII.GetBytes(json);
+            stream.Write(toServer, 0, toServer.Length);
+        }
+
         private byte[] TrimEmptyBytes(byte[] array)
         {
             int i = array.Length - 1;

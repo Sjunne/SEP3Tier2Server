@@ -46,5 +46,13 @@ namespace MainServerAPI.Controllers
             _network.updateProfile(profileData);
             return Created($"/{profileData.username}", profileData);
         }
+        
+        [HttpPost]
+        [Route("All")]
+        public async Task<ActionResult<ProfileData>> EditProfile([FromBody]Request request)
+        {
+            _network.editProfile(request);
+            return Created($"/{request.Username}", request);
+        }
     }
 }
