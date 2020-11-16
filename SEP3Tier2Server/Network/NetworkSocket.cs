@@ -121,6 +121,20 @@ namespace MainServerAPI.Network
             stream.Write(toServer, 0, toServer.Length);
         }
 
+        public void CreateProfile(ProfileData profileData)
+        {
+            var stream = NetworkStream();
+            
+            string s = JsonSerializer.Serialize(new Request
+            {
+                o=profileData,
+                requestOperation = RequestOperationEnum.CREATEPROFILE,
+            
+            });
+            byte[] dataToServer = Encoding.ASCII.GetBytes(s);
+            stream.Write(dataToServer, 0, dataToServer.Length);
+        }
+
         private byte[] TrimEmptyBytes(byte[] array)
         {
             int i = array.Length - 1;

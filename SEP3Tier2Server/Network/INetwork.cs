@@ -12,5 +12,7 @@ namespace MainServerAPI.Network
         byte[] GetCover(string username);
         List<byte[]> GetPictures(string username);
         void UploadImage(Request request);
+
+        void CreateProfile(ProfileData profileData);
     }
 }

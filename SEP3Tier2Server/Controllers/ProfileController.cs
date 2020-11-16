@@ -33,6 +33,7 @@ namespace MainServerAPI.Controllers
             }
             catch (Exception e)
             {
+                Console.WriteLine(e.StackTrace);
                 return StatusCode(500, e);
             }
 
