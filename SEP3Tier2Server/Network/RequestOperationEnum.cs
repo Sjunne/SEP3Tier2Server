@@ -1,4 +1,4 @@
-﻿﻿using System.Text.Json.Serialization;
+﻿using System.Text.Json.Serialization;
 
 namespace MainServerAPI.Network
 {
@@ -7,6 +7,9 @@ namespace MainServerAPI.Network
     public enum RequestOperationEnum
     {
         EDITINTRODUCTION,
-        PROFILE
+        PROFILE, 
+        COVER,
+        PICTURES,
+        UPLOADPICTURE
     }
 }

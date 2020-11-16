@@ -22,7 +22,21 @@ namespace MainServerAPI.Controllers
         [HttpGet]
         public async Task<ActionResult<ProfileData>> GetProfile([FromQuery] string username)
         {
-            ProfileData profileData = _network.GetProfile(username);
+            ProfileData profileData;
+            try
+            {
+                profileData = _network.GetProfile(username);
+
+                if (profileData == null)
+                    return StatusCode(503);
+
+            }
+            catch (Exception e)
+            {
+                return StatusCode(500, e);
+            }
+
+
             return Ok(profileData);
         }
 

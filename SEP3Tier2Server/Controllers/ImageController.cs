@@ -1,6 +1,9 @@
 using System;
+using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
+using System.Text.Json;
+using System.Threading.Tasks;
 using MainServerAPI.Network;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -11,16 +14,47 @@ namespace MainServerAPI.Controllers
     [Route("[controller]")]
     public class ImageController : ControllerBase
     {
+        
+        private INetwork _network;
 
+        public ImageController(INetwork network)
+        {
+            _network = network;
+        }
 
         [HttpGet]
-        public IActionResult Get()
-        {    
-            //Læser alle bytes fra et billedet og ligger det ind i et byte array
+        public async Task<string> Get(string username)
+        {
+            Byte[] b = _network.GetCover(username);
+            var base64 = Convert.ToBase64String(b);
+            var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
+
+            return imgSrc;
+        }
+
+        [HttpPost]
+        public async Task<ActionResult<Request>> UploadImage([FromBody] Request request)
+        {
+            _network.UploadImage(request);
+            return Created($"/added", request);
+        }
+
+        [HttpGet]
+        [Route("All")]
+        public async Task<string> GetPictures([FromQuery] string username)
+        {
+            List<Byte[]> b = _network.GetPictures(username);
             
-            Byte[] b = System.IO.File.ReadAllBytes(@"C:\Users\sjunn\RiderProjects\SEP3Tier2Server\SEP3Tier2Server\images\asdasd.jpg"); 
-            //Returnere end File. Skal være JPG, ellers gemmer den som en "FILE" i stedet for
-            return File(b, "image/jpg");
+            string allImages = "";
+            for (int i = 0; i < b.Count; i++)
+            {
+                string image = Convert.ToBase64String(b[i]);
+                string encoded = String.Format("data:image/gif;base64,{0}", image);
+                allImages += encoded;
+                allImages += "å";
+            }
+
+            return allImages;
         }
 
     }
