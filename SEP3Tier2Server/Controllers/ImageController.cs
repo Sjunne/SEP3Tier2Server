@@ -15,8 +15,11 @@ namespace MainServerAPI.Controllers
 
         [HttpGet]
         public IActionResult Get()
-        {            
-            Byte[] b = System.IO.File.ReadAllBytes(@"C:\Users\sjunn\RiderProjects\SEP3Tier2Server\SEP3Tier2Server\images\asdasd.jpg");   // You can use your own method over here.         
+        {    
+            //Læser alle bytes fra et billedet og ligger det ind i et byte array
+            
+            Byte[] b = System.IO.File.ReadAllBytes(@"C:\Users\sjunn\RiderProjects\SEP3Tier2Server\SEP3Tier2Server\images\asdasd.jpg"); 
+            //Returnere end File. Skal være JPG, ellers gemmer den som en "FILE" i stedet for
             return File(b, "image/jpg");
         }
 
