@@ -11,6 +11,7 @@ namespace MainServerAPI.Network
         COVER,
         PICTURES,
         UPLOADPICTURE,
-        CREATEPROFILE
+        CREATEPROFILE,
+        CREATEPREFERENCE
     }
 }

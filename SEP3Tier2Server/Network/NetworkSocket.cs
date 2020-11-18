@@ -135,6 +135,20 @@ namespace MainServerAPI.Network
             stream.Write(dataToServer, 0, dataToServer.Length);
         }
 
+        public void CreatePreference(ProfileData profileData)
+        {
+            var stream = NetworkStream();
+            
+            string s = JsonSerializer.Serialize(new Request
+            {
+                o=profileData,
+                requestOperation = RequestOperationEnum.CREATEPREFERENCE,
+            
+            });
+            byte[] dataToServer = Encoding.ASCII.GetBytes(s);
+            stream.Write(dataToServer, 0, dataToServer.Length);
+        }
+
         private byte[] TrimEmptyBytes(byte[] array)
         {
             int i = array.Length - 1;

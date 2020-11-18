@@ -14,5 +14,7 @@ namespace MainServerAPI.Network
         void UploadImage(Request request);
 
         void CreateProfile(ProfileData profileData);
+
+        void CreatePreference(ProfileData profileData);
     }
 }

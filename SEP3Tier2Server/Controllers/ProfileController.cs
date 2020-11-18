@@ -1,5 +1,6 @@
 ﻿﻿using System;
-using System.Threading.Tasks;
+ using System.Text.Json;
+ using System.Threading.Tasks;
 using MainServerAPI.Data;
 using MainServerAPI.Network;
 using Microsoft.AspNetCore.Authentication;
@@ -46,6 +47,24 @@ namespace MainServerAPI.Controllers
         {
             _network.updateProfile(profileData);
             return Created($"/{profileData.username}", profileData);
+        }
+        
+        [Route("CreateProfile")]
+        [HttpPost]
+        public async Task CreateProfile([FromBody] ProfileData profileData)
+        {
+            Details self = JsonSerializer.Deserialize<Details>(profileData.jsonSelf);
+            profileData.self = self;
+
+            _network.CreateProfile(profileData);
+        }
+        
+
+        [Route("CreatePreference")]
+        [HttpPost]
+        public async Task CreatePreference([FromBody] ProfileData profileData)
+        {
+            _network.CreatePreference(profileData);
         }
     }
 }

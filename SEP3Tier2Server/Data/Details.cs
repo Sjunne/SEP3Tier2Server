@@ -5,8 +5,8 @@
         public string hairColor { get; set; }
         public string skinColor { get; set; }
         public string nationality { get; set; }
-        public string minimumAge { get; set; }
-        public string maximumAge { get; set; }
+        public int minimumAge { get; set; }
+        public int maximumAge { get; set; }
         public string bodyShape { get; set; }
         public string hobbies { get; set; }
         public string education { get; set; }
