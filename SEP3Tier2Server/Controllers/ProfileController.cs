@@ -46,5 +46,7 @@ namespace MainServerAPI.Controllers
             _network.updateProfile(profileData);
             return Created($"/{profileData.username}", profileData);
         }
+      
+        
     }
 }

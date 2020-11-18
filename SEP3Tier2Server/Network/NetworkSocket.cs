@@ -56,7 +56,7 @@ namespace MainServerAPI.Network
         public Byte[] GetCover(string username)
         {
             var stream = NetworkStream();
-            
+            Console.WriteLine(username + "here");
             string s = JsonSerializer.Serialize<Request>(new Request()
             {
                 Username =  username,
@@ -119,6 +119,54 @@ namespace MainServerAPI.Network
             string json = JsonSerializer.Serialize(request);
             byte[] toServer = Encoding.ASCII.GetBytes(json);
             stream.Write(toServer, 0, toServer.Length);
+        }
+
+        public void UpdateCover(string pictureName)
+        {
+            var stream = NetworkStream();
+            string json = JsonSerializer.Serialize(new Request()
+            {
+                Username = "Maria",
+                o = pictureName,
+                requestOperation = RequestOperationEnum.UPDATECOVER
+            });
+            byte[] toServer = Encoding.ASCII.GetBytes(json);
+            stream.Write(toServer, 0, toServer.Length);
+        }
+
+        public byte[] GetProfilePicture(string username)
+        {
+            var stream = NetworkStream();
+            string s = JsonSerializer.Serialize<Request>(new Request()
+            {
+                Username =  username,
+                requestOperation = RequestOperationEnum.PROFILEPIC
+            });
+            
+            byte[] dataToServer = Encoding.ASCII.GetBytes(s);
+            stream.Write(dataToServer, 0, dataToServer.Length);
+            
+            
+            byte[] fromServer = new byte[16*1024];
+            stream.Read(fromServer, 0, fromServer.Length);
+            if (fromServer[0] == 0)
+            {
+                throw new NetworkIssue("Cover-byte array was empty");
+            }
+            return fromServer;
+        }
+
+        public void UpdateProfilePic(string pictureName)
+        {
+            var stream = NetworkStream();
+            string json = JsonSerializer.Serialize(new Request()
+            {
+                Username = "Maria",
+                o = pictureName,
+                requestOperation = RequestOperationEnum.UPDATEPROFILEPIC
+            });
+            byte[] toServer = Encoding.ASCII.GetBytes(json);
+            stream.Write(toServer, 0, toServer.Length);        
         }
 
         private byte[] TrimEmptyBytes(byte[] array)
