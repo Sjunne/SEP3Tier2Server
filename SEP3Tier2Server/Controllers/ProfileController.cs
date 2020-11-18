@@ -29,11 +29,10 @@ namespace MainServerAPI.Controllers
 
                 if (profileData == null)
                     return StatusCode(503);
-
             }
             catch (Exception e)
             {
-                return StatusCode(500, e);
+                return StatusCode(500, e.Message);
             }
 
 
@@ -41,7 +40,7 @@ namespace MainServerAPI.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<ProfileData>> AddProfile([FromBody]ProfileData profileData)
+        public async Task<ActionResult<ProfileData>> EditProfile([FromBody]ProfileData profileData)
         {
             _network.updateProfile(profileData);
             return Created($"/{profileData.username}", profileData);
@@ -49,7 +48,7 @@ namespace MainServerAPI.Controllers
         
         [HttpPost]
         [Route("All")]
-        public async Task<ActionResult<ProfileData>> EditProfile([FromBody]Request request)
+        public async Task<ActionResult<Request>> EditProfile([FromBody] Request request)
         {
             _network.editProfile(request);
             return Created($"/{request.Username}", request);

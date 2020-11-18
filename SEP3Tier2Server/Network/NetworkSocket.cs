@@ -123,6 +123,7 @@ namespace MainServerAPI.Network
 
         public void editProfile(Request request)
         {
+            Console.WriteLine("Here");
             var stream = NetworkStream();
             string json = JsonSerializer.Serialize(request);
             byte[] toServer = Encoding.ASCII.GetBytes(json);
@@ -156,7 +157,6 @@ namespace MainServerAPI.Network
 
             //Tar Imod Profile gennem sockets
             string response = Encoding.ASCII.GetString(fromServer, 0, bytesRead);
-            Console.WriteLine(response);
             Request request = JsonSerializer.Deserialize<Request>(response);
             return request;
 
