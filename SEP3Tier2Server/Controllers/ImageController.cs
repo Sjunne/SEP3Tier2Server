@@ -23,10 +23,22 @@ namespace MainServerAPI.Controllers
         }
 
         [HttpGet]
-        public async Task<string> Get(string username)
+        public async Task<string> Get([FromQuery]string username)
         {
             //returns coverpicture for user
             Byte[] b = _network.GetCover(username);
+            var base64 = Convert.ToBase64String(b);
+            var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
+
+            return imgSrc;
+        }
+        
+        
+        [HttpGet]
+        [Route("ProfilePic")]
+        public async Task<string> GetProfilePic([FromQuery]string username)
+        {
+            Byte[] b = _network.GetProfilePicture(username);
             var base64 = Convert.ToBase64String(b);
             var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
 
@@ -56,6 +68,20 @@ namespace MainServerAPI.Controllers
             }
 
             return allImages;
+        }
+        
+        [HttpPost]
+        [Route("UpdateCover")]
+        public async Task UpdateCover([FromBody]string pictureName)
+        {
+            _network.UpdateCover(pictureName);
+        }
+        
+        [HttpPost]
+        [Route("UpdateProfilePic")]
+        public async Task UpdateProfilePic([FromBody]string pictureName)
+        {
+            _network.UpdateProfilePic(pictureName);
         }
 
     }

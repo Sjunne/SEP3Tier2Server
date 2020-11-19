@@ -12,6 +12,9 @@ namespace MainServerAPI.Network
         PICTURES,
         UPLOADPICTURE,
         EDITABOUT,
-        REVIEWS
+        REVIEWS,
+        UPDATECOVER,
+        PROFILEPIC,
+        UPDATEPROFILEPIC
     }
 }
