@@ -13,5 +13,6 @@ namespace MainServerAPI.Network
         List<byte[]> GetPictures(string username);
         void UploadImage(Request request);
         void editProfile(Request request);
+        IList<Review> GetReviews(string username);
     }
 }

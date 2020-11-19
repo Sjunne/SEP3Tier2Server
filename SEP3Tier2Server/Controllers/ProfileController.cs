@@ -1,5 +1,6 @@
 ﻿﻿using System;
-using System.Threading.Tasks;
+ using System.Collections.Generic;
+ using System.Threading.Tasks;
 using MainServerAPI.Data;
 using MainServerAPI.Network;
 using Microsoft.AspNetCore.Authentication;
@@ -17,6 +18,14 @@ namespace MainServerAPI.Controllers
         public ProfileController(INetwork network)
         {
             _network = network;
+        }
+
+        [HttpGet]
+        [Route("Reviews")]
+        public async Task<ActionResult<IList<Review>>> GetReviews([FromQuery] string username)
+        {
+            IList<Review> reviews = _network.GetReviews(username);
+            return Ok(reviews);
         }
 
         [HttpGet]

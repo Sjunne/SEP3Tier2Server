@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Net.Sockets;
 using System.Text;
 using System.Text.Json;
@@ -79,13 +80,11 @@ namespace MainServerAPI.Network
         public List<byte[]> GetPictures(string username)
         {
             var stream = NetworkStream();
-
             string s = JsonSerializer.Serialize<Request>(new Request()
             {
                 Username =  username,
                 requestOperation = RequestOperationEnum.PICTURES
             });
-            
             byte[] dataToServer = Encoding.ASCII.GetBytes(s);
             stream.Write(dataToServer, 0, dataToServer.Length);
             
@@ -123,11 +122,25 @@ namespace MainServerAPI.Network
 
         public void editProfile(Request request)
         {
-            Console.WriteLine("Here");
             var stream = NetworkStream();
             string json = JsonSerializer.Serialize(request);
             byte[] toServer = Encoding.ASCII.GetBytes(json);
             stream.Write(toServer, 0, toServer.Length);
+        }
+
+        public IList<Review> GetReviews(string username)
+        {
+            Request request = new Request()
+            {
+                Username = username,
+                requestOperation = RequestOperationEnum.REVIEWS
+            };
+            string json = JsonSerializer.Serialize(request);
+            Request response = WriteAndReadFromServer(json);
+            Console.WriteLine(response.ToString() + " line 141");
+
+            IList<Review> reviews = JsonSerializer.Deserialize<IList<Review>>(response.o.ToString());
+            return reviews;
         }
 
         private byte[] TrimEmptyBytes(byte[] array)
@@ -155,7 +168,7 @@ namespace MainServerAPI.Network
             byte[] fromServer = new byte[1024];
             int bytesRead = stream.Read(fromServer, 0, fromServer.Length);
 
-            //Tar Imod Profile gennem sockets
+            //Tar Imod request gennem sockets
             string response = Encoding.ASCII.GetString(fromServer, 0, bytesRead);
             Request request = JsonSerializer.Deserialize<Request>(response);
             return request;
