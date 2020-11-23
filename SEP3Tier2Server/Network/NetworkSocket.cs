@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Net.Sockets;
 using System.Text;
 using System.Text.Json;
@@ -67,7 +68,7 @@ namespace MainServerAPI.Network
             stream.Write(dataToServer, 0, dataToServer.Length);
             
             
-            byte[] fromServer = new byte[16*1024];
+            byte[] fromServer = new byte[1024*1024];
             stream.Read(fromServer, 0, fromServer.Length);
             if (fromServer[0] == 0)
             {
@@ -88,7 +89,6 @@ namespace MainServerAPI.Network
             
             byte[] dataToServer = Encoding.ASCII.GetBytes(s);
             stream.Write(dataToServer, 0, dataToServer.Length);
-            
             
             
             List<byte[]> list = new List<byte[]>();
@@ -119,6 +119,101 @@ namespace MainServerAPI.Network
             string json = JsonSerializer.Serialize(request);
             byte[] toServer = Encoding.ASCII.GetBytes(json);
             stream.Write(toServer, 0, toServer.Length);
+        }
+
+        public void UpdateCover(string pictureName)
+        {
+            var stream = NetworkStream();
+            string json = JsonSerializer.Serialize(new Request()
+            {
+                Username = "Maria",
+                o = pictureName,
+                requestOperation = RequestOperationEnum.UPDATECOVER
+            });
+            byte[] toServer = Encoding.ASCII.GetBytes(json);
+            stream.Write(toServer, 0, toServer.Length);
+        }
+
+        public byte[] GetProfilePicture(string username)
+        {
+            var stream = NetworkStream();
+            string s = JsonSerializer.Serialize<Request>(new Request()
+            {
+                Username =  username,
+                requestOperation = RequestOperationEnum.PROFILEPIC
+            });
+            
+            byte[] dataToServer = Encoding.ASCII.GetBytes(s);
+            stream.Write(dataToServer, 0, dataToServer.Length);
+            
+            
+            byte[] fromServer = new byte[1024*1024];
+            stream.Read(fromServer, 0, fromServer.Length);
+            if (fromServer[0] == 0)
+            {
+                throw new NetworkIssue("Cover-byte array was empty");
+            }
+            return fromServer;
+        }
+
+        public void UpdateProfilePic(string pictureName)
+        {
+            var stream = NetworkStream();
+            string json = JsonSerializer.Serialize(new Request()
+            {
+                Username = "Maria",
+                o = pictureName,
+                requestOperation = RequestOperationEnum.UPDATEPROFILEPIC
+            });
+            byte[] toServer = Encoding.ASCII.GetBytes(json);
+            stream.Write(toServer, 0, toServer.Length);        
+        }
+
+        public void editProfile(Request request)
+        {
+            var stream = NetworkStream();
+            string json = JsonSerializer.Serialize(request);
+            byte[] toServer = Encoding.ASCII.GetBytes(json);
+            stream.Write(toServer, 0, toServer.Length);
+        }
+
+        public IList<Review> GetReviews(string username)
+        {
+            Request request = new Request()
+            {
+                Username = username,
+                requestOperation = RequestOperationEnum.REVIEWS
+            };
+            string json = JsonSerializer.Serialize(request);
+            var stream = NetworkStream();
+
+
+            byte[] dataToServer = Encoding.ASCII.GetBytes(json);
+            stream.Write(dataToServer, 0, dataToServer.Length);
+            byte[] fromServer = new byte[1024*1024*2];
+            int bytesRead = stream.Read(fromServer, 0, fromServer.Length);
+
+            string s = Encoding.ASCII.GetString(fromServer, 0, bytesRead);
+            Int32 number = JsonSerializer.Deserialize<Int32>(s);
+            
+            IList<Review> reviews = new List<Review>();
+            for (int i = 0; i < number; i++)
+            {
+                stream.Read(fromServer, 0, fromServer.Length);
+                
+                string image = Convert.ToBase64String(fromServer);
+                string encoded = String.Format("data:image/gif;base64,{0}", image);
+
+                int read1 = stream.Read(fromServer, 0, fromServer.Length);
+                string s1 = Encoding.ASCII.GetString(fromServer, 0, read1);
+                Request deserialize = JsonSerializer.Deserialize<Request>(s1);
+                Review review = JsonSerializer.Deserialize<Review>(deserialize.o.ToString());
+
+                review.image = encoded;
+                reviews.Add(review);
+
+            }
+            return reviews;
         }
 
         public void CreateProfile(ProfileData profileData)
@@ -171,12 +266,11 @@ namespace MainServerAPI.Network
 
             byte[] dataToServer = Encoding.ASCII.GetBytes(s);
             stream.Write(dataToServer, 0, dataToServer.Length);
-            byte[] fromServer = new byte[1024];
+            byte[] fromServer = new byte[1024*1024];
             int bytesRead = stream.Read(fromServer, 0, fromServer.Length);
 
-            //Tar Imod Profile gennem sockets
+            //Tar Imod request gennem sockets
             string response = Encoding.ASCII.GetString(fromServer, 0, bytesRead);
-            Console.WriteLine(response);
             Request request = JsonSerializer.Deserialize<Request>(response);
             return request;
 

@@ -12,6 +12,11 @@ namespace MainServerAPI.Network
         byte[] GetCover(string username);
         List<byte[]> GetPictures(string username);
         void UploadImage(Request request);
+        void UpdateCover(string pictureName);
+        byte[] GetProfilePicture(string username);
+        void UpdateProfilePic(string pictureName);
+        void editProfile(Request request);
+        IList<Review> GetReviews(string username);
 
         void CreateProfile(ProfileData profileData);
 

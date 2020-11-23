@@ -1,4 +1,6 @@
 ﻿﻿using System;
+ using System.Collections.Generic;
+ using System.Threading.Tasks;
  using System.Text.Json;
  using System.Threading.Tasks;
 using MainServerAPI.Data;
@@ -21,6 +23,14 @@ namespace MainServerAPI.Controllers
         }
 
         [HttpGet]
+        [Route("Reviews")]
+        public async Task<ActionResult<IList<Review>>> GetReviews([FromQuery] string username)
+        {
+            IList<Review> reviews = _network.GetReviews(username);
+            return Ok(reviews);
+        }
+
+        [HttpGet]
         public async Task<ActionResult<ProfileData>> GetProfile([FromQuery] string username)
         {
             ProfileData profileData;
@@ -30,12 +40,11 @@ namespace MainServerAPI.Controllers
 
                 if (profileData == null)
                     return StatusCode(503);
-
             }
             catch (Exception e)
             {
-                Console.WriteLine(e.StackTrace);
-                return StatusCode(500, e);
+                return StatusCode(500, e.Message);
+                
             }
 
 
@@ -43,10 +52,18 @@ namespace MainServerAPI.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<ProfileData>> AddProfile([FromBody]ProfileData profileData)
+        public async Task<ActionResult<ProfileData>> EditProfile([FromBody]ProfileData profileData)
         {
             _network.updateProfile(profileData);
             return Created($"/{profileData.username}", profileData);
+        }
+        
+        [HttpPost]
+        [Route("All")]
+        public async Task<ActionResult<Request>> EditProfile([FromBody] Request request)
+        {
+            _network.editProfile(request);
+            return Created($"/{request.Username}", request);
         }
         
         [Route("CreateProfile")]
