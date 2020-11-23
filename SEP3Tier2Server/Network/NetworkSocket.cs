@@ -67,7 +67,7 @@ namespace MainServerAPI.Network
             stream.Write(dataToServer, 0, dataToServer.Length);
             
             
-            byte[] fromServer = new byte[16*1024];
+            byte[] fromServer = new byte[1024*1024];
             stream.Read(fromServer, 0, fromServer.Length);
             if (fromServer[0] == 0)
             {
@@ -147,7 +147,7 @@ namespace MainServerAPI.Network
             stream.Write(dataToServer, 0, dataToServer.Length);
             
             
-            byte[] fromServer = new byte[16*1024];
+            byte[] fromServer = new byte[1024*1024];
             stream.Read(fromServer, 0, fromServer.Length);
             if (fromServer[0] == 0)
             {
