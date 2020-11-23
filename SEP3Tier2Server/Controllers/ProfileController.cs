@@ -43,7 +43,7 @@ namespace MainServerAPI.Controllers
         {
             ProfileData profileData;
             try
-            {
+            { 
                 profileData = _network.GetProfile(username);
 
                 if (profileData == null)
@@ -52,18 +52,19 @@ namespace MainServerAPI.Controllers
             catch (Exception e)
             {
                 return StatusCode(500, e.Message);
-                
             }
-
-
+            
             return Ok(profileData);
         }
 
         [HttpPost]
         public async Task<ActionResult<ProfileData>> EditProfile([FromBody]ProfileData profileData)
         {
-            _network.updateProfile(profileData);
-            return Created($"/{profileData.username}", profileData);
+            RequestOperationEnum requestOperationEnum = _network.updateProfile(profileData);
+            if(requestOperationEnum == RequestOperationEnum.ERROR)
+               return Created($"/{profileData.username}", profileData);
+            
+            return StatusCode(503);
         }
         
         [HttpPost]

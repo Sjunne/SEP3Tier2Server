@@ -112,16 +112,28 @@ namespace MainServerAPI.Controllers
         
         [HttpPost]
         [Route("UpdateCover")]
-        public async Task UpdateCover([FromBody]string pictureName)
+        public async Task<ActionResult> UpdateCover([FromBody]string pictureName)
         {
-            _network.UpdateCover(pictureName);
+            RequestOperationEnum requestOperationEnum = _network.UpdateCover(pictureName);
+            if (requestOperationEnum == RequestOperationEnum.ERROR)
+            {
+                return StatusCode(503);
+            }
+            
+            return StatusCode(200);
         }
         
         [HttpPost]
         [Route("UpdateProfilePic")]
-        public async Task UpdateProfilePic([FromBody]string pictureName)
+        public async Task<ActionResult> UpdateProfilePic([FromBody]string pictureName)
         {
-            _network.UpdateProfilePic(pictureName);
+            RequestOperationEnum requestOperationEnum = _network.UpdateProfilePic(pictureName);
+            if (requestOperationEnum == RequestOperationEnum.ERROR)
+            {
+                return StatusCode(503);
+            }
+            
+            return StatusCode(200);
         }
 
     }

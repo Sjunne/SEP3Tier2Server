@@ -6,15 +6,15 @@ namespace MainServerAPI.Network
 {
     public interface INetwork
     {
-        void updateProfile(ProfileData profile);
+        RequestOperationEnum updateProfile(ProfileData profile);
         ProfileData GetProfile(string username);
 
         byte[] GetCover(string username);
         List<byte[]> GetPictures(string username);
         RequestOperationEnum UploadImage(Request request);
-        void UpdateCover(string pictureName);
+        RequestOperationEnum UpdateCover(string pictureName);
         byte[] GetProfilePicture(string username);
-        void UpdateProfilePic(string pictureName);
+        RequestOperationEnum UpdateProfilePic(string pictureName);
         RequestOperationEnum editProfile(Request request);
         IList<Review> GetReviews(string username);
 
