@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using MainServerAPI.Network;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using SEP3Tier2Server.Exceptions;
 
 namespace MainServerAPI.Controllers
 {
@@ -23,51 +24,90 @@ namespace MainServerAPI.Controllers
         }
 
         [HttpGet]
-        public async Task<string> Get([FromQuery]string username)
+        public async Task<ActionResult<string>> Get([FromQuery]string username)
         {
             //returns coverpicture for user
-            Byte[] b = _network.GetCover(username);
-            var base64 = Convert.ToBase64String(b);
-            var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
+            try
+            {
+                Byte[] b = _network.GetCover(username);
+                var base64 = Convert.ToBase64String(b);
+                var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
 
-            return imgSrc;
+                return Ok(imgSrc);
+            }
+            catch (NetworkIssue e)
+            {
+                return StatusCode(404, e.Message);
+            }
+            catch (ServiceUnavailable e)
+            {
+                return StatusCode(503, e.Message);
+            }
+           
         }
         
         
         [HttpGet]
         [Route("ProfilePic")]
-        public async Task<string> GetProfilePic([FromQuery]string username)
+        public async Task<ActionResult<string>> GetProfilePic([FromQuery]string username)
         {
-            Byte[] b = _network.GetProfilePicture(username);
-            var base64 = Convert.ToBase64String(b);
-            var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
 
-            return imgSrc;
+            try
+            {
+                Byte[] b = _network.GetProfilePicture(username);
+                var base64 = Convert.ToBase64String(b);
+                var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
+                return Ok(imgSrc);
+
+            }
+            catch (NetworkIssue e)
+            {
+                return StatusCode(404, e.Message);
+            }
+            catch (ServiceUnavailable e)
+            {
+                return StatusCode(503, e.Message);
+            }
+                
+
+           
+
+            
         }
 
         [HttpPost]
         public async Task<ActionResult<Request>> UploadImage([FromBody] Request request)
         {
-            _network.UploadImage(request);
-            return Created($"/added", request);
+            RequestOperationEnum requestOperationEnum = _network.UploadImage(request);
+            if(requestOperationEnum == RequestOperationEnum.SUCCESS)
+                return Created($"/added", request);
+           
+            return StatusCode(503, requestOperationEnum);
         }
 
         [HttpGet]
         [Route("All")]
-        public async Task<string> GetPictures([FromQuery] string username)
+        public async Task<ActionResult<string>> GetPictures([FromQuery] string username)
         {
-            List<Byte[]> b = _network.GetPictures(username);
-            
-            string allImages = "";
-            for (int i = 0; i < b.Count; i++)
+            try
+            { 
+                List<Byte[]> b = _network.GetPictures(username);
+                string allImages = "";
+                for (int i = 0; i < b.Count; i++)
+                {
+                    string image = Convert.ToBase64String(b[i]);
+                    string encoded = String.Format("data:image/gif;base64,{0}", image);
+                    allImages += encoded;
+                    allImages += "å";
+                }
+
+                return Ok(allImages);
+            }
+            catch (ServiceUnavailable e)
             {
-                string image = Convert.ToBase64String(b[i]);
-                string encoded = String.Format("data:image/gif;base64,{0}", image);
-                allImages += encoded;
-                allImages += "å";
+                return StatusCode(503, e.Message);
             }
 
-            return allImages;
         }
         
         [HttpPost]

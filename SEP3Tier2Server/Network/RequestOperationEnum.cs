@@ -15,6 +15,8 @@ namespace MainServerAPI.Network
         REVIEWS,
         UPDATECOVER,
         PROFILEPIC,
-        UPDATEPROFILEPIC
+        UPDATEPROFILEPIC, 
+        SUCCESS,
+        ERROR
     }
 }

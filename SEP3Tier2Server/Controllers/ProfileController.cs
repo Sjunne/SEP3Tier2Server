@@ -24,8 +24,16 @@ namespace MainServerAPI.Controllers
         [Route("Reviews")]
         public async Task<ActionResult<IList<Review>>> GetReviews([FromQuery] string username)
         {
-            IList<Review> reviews = _network.GetReviews(username);
-            return Ok(reviews);
+            try
+            {
+                IList<Review> reviews = _network.GetReviews(username);
+                return Ok(reviews);
+
+            }
+            catch (Exception e)
+            {
+                return StatusCode(503, e.Message);
+            }
         }
 
         [HttpGet]
@@ -59,8 +67,11 @@ namespace MainServerAPI.Controllers
         [Route("All")]
         public async Task<ActionResult<Request>> EditProfile([FromBody] Request request)
         {
-            _network.editProfile(request);
-            return Created($"/{request.Username}", request);
+            RequestOperationEnum requestOperationEnum = _network.editProfile(request);
+            if (requestOperationEnum == RequestOperationEnum.SUCCESS)
+                return Created($"/{request.Username}", request);
+            else
+                return StatusCode(503, requestOperationEnum);    
         }
     }
 }

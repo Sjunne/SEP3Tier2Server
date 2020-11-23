@@ -25,10 +25,12 @@ namespace MainServerAPI.Network
 
             string s = JsonSerializer.Serialize(new Request
             {
-            o=profile,
+            o=JsonSerializer.Serialize(profile),
             requestOperation = RequestOperationEnum.EDITINTRODUCTION,
             
             });
+            
+            Console.WriteLine(s);
             byte[] dataToServer = Encoding.ASCII.GetBytes(s);
             stream.Write(dataToServer, 0, dataToServer.Length);
         }
@@ -68,11 +70,15 @@ namespace MainServerAPI.Network
             stream.Write(dataToServer, 0, dataToServer.Length);
             
             
-            byte[] fromServer = new byte[16*1024];
-            stream.Read(fromServer, 0, fromServer.Length);
-            if (fromServer[0] == 0)
+            byte[] fromServer = new byte[1024*1024];
+            int read = stream.Read(fromServer, 0, fromServer.Length);
+            if (read == 1)
             {
-                throw new NetworkIssue("Cover-byte array was empty");
+                throw new NetworkIssue("Cover picture not found");
+            }
+            else if (read == 2)
+            {
+                throw new ServiceUnavailable("Database Connection Lost");
             }
             return fromServer;
         }
@@ -96,29 +102,35 @@ namespace MainServerAPI.Network
             byte[] fromServer = new byte[1024];
             stream.Read(fromServer, 0, fromServer.Length);
             string from = Encoding.ASCII.GetString(fromServer);
+
+            int count = Int32.Parse(from);
+            if (count == -1)
+            {
+                throw new ServiceUnavailable("Lost database connection");
+            }
             
-            int count = Int32.Parse(from.ToCharArray()[0].ToString());
             for (int i = 0; i < count; i++)
             {
                 byte[] read = new byte[1024*1024];
                 stream.Read(read, 0, read.Length);
                 list.Add(TrimEmptyBytes(read));
             }
-            
-            if (fromServer[0] == 0)
-            {
-                throw new NetworkIssue("Cover-byte array was empty");
-            }
-            
             return list;
         }
 
-        public void UploadImage(Request request)
+        public RequestOperationEnum UploadImage(Request request)
         {
             var stream = NetworkStream();
             string json = JsonSerializer.Serialize(request);
             byte[] toServer = Encoding.ASCII.GetBytes(json);
             stream.Write(toServer, 0, toServer.Length);
+            
+            byte[] fromServer = new byte[1024];
+            stream.Read(fromServer, 0, fromServer.Length);
+
+            string response = Encoding.ASCII.GetString(fromServer);
+            Request request1 = JsonSerializer.Deserialize<Request>(response);
+            return request1.requestOperation;
         }
 
         public void UpdateCover(string pictureName)
@@ -146,13 +158,19 @@ namespace MainServerAPI.Network
             byte[] dataToServer = Encoding.ASCII.GetBytes(s);
             stream.Write(dataToServer, 0, dataToServer.Length);
             
-            
-            byte[] fromServer = new byte[16*1024];
-            stream.Read(fromServer, 0, fromServer.Length);
-            if (fromServer[0] == 0)
+            byte[] fromServer = new byte[1024*1024];
+            int read = stream.Read(fromServer, 0, fromServer.Length);
+
+            if (read == 1)
             {
-                throw new NetworkIssue("Cover-byte array was empty");
+                throw new NetworkIssue("Profile Picture was not found");
             }
+            else if (read == 2)
+            {
+                throw new ServiceUnavailable("Lost database connection");
+            }
+                
+            
             return fromServer;
         }
 
@@ -169,12 +187,18 @@ namespace MainServerAPI.Network
             stream.Write(toServer, 0, toServer.Length);        
         }
 
-        public void editProfile(Request request)
+        public RequestOperationEnum editProfile(Request request)
         {
             var stream = NetworkStream();
             string json = JsonSerializer.Serialize(request);
             byte[] toServer = Encoding.ASCII.GetBytes(json);
             stream.Write(toServer, 0, toServer.Length);
+            
+            byte[] fromServer = new byte[1024];
+            stream.Read(fromServer, 0, fromServer.Length);
+            string response = Encoding.ASCII.GetString(fromServer);
+            Request requestResponse = JsonSerializer.Deserialize<Request>(response);
+            return requestResponse.requestOperation;
         }
 
         public IList<Review> GetReviews(string username)
@@ -199,8 +223,12 @@ namespace MainServerAPI.Network
             IList<Review> reviews = new List<Review>();
             for (int i = 0; i < number; i++)
             {
-                stream.Read(fromServer, 0, fromServer.Length);
-                
+                int read = stream.Read(fromServer, 0, fromServer.Length);
+                if (read == 1)
+                {
+                    throw new ServiceUnavailable("Lost database connection");
+                }
+
                 string image = Convert.ToBase64String(fromServer);
                 string encoded = String.Format("data:image/gif;base64,{0}", image);
 
@@ -211,23 +239,11 @@ namespace MainServerAPI.Network
 
                 review.image = encoded;
                 reviews.Add(review);
-
             }
             return reviews;
         }
 
-        private byte[] TrimEmptyBytes(byte[] array)
-        {
-            int i = array.Length - 1;
-            while (array[i] == 0)
-            {
-                --i;
-            }
-
-            byte[] bar = new byte[i + 1];
-            Array.Copy(array, bar, i+1);
-            return bar;
-        }
+        
         
         
         //Metoder til optimering
@@ -269,6 +285,19 @@ namespace MainServerAPI.Network
             }
             
             return stream;
+        }
+        
+        private byte[] TrimEmptyBytes(byte[] array)
+        {
+            int i = array.Length - 1;
+            while (array[i] == 0)
+            {
+                --i;
+            }
+
+            byte[] bar = new byte[i + 1];
+            Array.Copy(array, bar, i+1);
+            return bar;
         }
     }
 }
