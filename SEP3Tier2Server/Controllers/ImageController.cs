@@ -25,6 +25,7 @@ namespace MainServerAPI.Controllers
         [HttpGet]
         public async Task<string> Get([FromQuery]string username)
         {
+            //returns coverpicture for user
             Byte[] b = _network.GetCover(username);
             var base64 = Convert.ToBase64String(b);
             var imgSrc = String.Format("data:image/gif;base64,{0}", base64);

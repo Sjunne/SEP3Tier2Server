@@ -15,5 +15,7 @@ namespace MainServerAPI.Network
         void UpdateCover(string pictureName);
         byte[] GetProfilePicture(string username);
         void UpdateProfilePic(string pictureName);
+        void editProfile(Request request);
+        IList<Review> GetReviews(string username);
     }
 }

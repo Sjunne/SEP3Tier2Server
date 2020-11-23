@@ -11,6 +11,8 @@ namespace MainServerAPI.Network
         COVER,
         PICTURES,
         UPLOADPICTURE,
+        EDITABOUT,
+        REVIEWS,
         UPDATECOVER,
         PROFILEPIC,
         UPDATEPROFILEPIC
