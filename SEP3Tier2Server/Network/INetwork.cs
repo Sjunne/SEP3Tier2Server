@@ -17,5 +17,9 @@ namespace MainServerAPI.Network
         void UpdateProfilePic(string pictureName);
         RequestOperationEnum editProfile(Request request);
         IList<Review> GetReviews(string username);
+
+        void CreateProfile(ProfileData profileData);
+
+        void CreatePreference(ProfileData profileData);
     }
 }

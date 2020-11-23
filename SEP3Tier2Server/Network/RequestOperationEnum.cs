@@ -17,6 +17,8 @@ namespace MainServerAPI.Network
         PROFILEPIC,
         UPDATEPROFILEPIC, 
         SUCCESS,
-        ERROR
+        ERROR,
+        CREATEPROFILE,
+        CREATEPREFERENCE
     }
 }

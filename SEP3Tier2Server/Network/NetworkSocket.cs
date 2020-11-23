@@ -30,7 +30,6 @@ namespace MainServerAPI.Network
             
             });
             
-            Console.WriteLine(s);
             byte[] dataToServer = Encoding.ASCII.GetBytes(s);
             stream.Write(dataToServer, 0, dataToServer.Length);
         }
@@ -239,11 +238,51 @@ namespace MainServerAPI.Network
 
                 review.image = encoded;
                 reviews.Add(review);
+
             }
             return reviews;
         }
 
-        
+        public void CreateProfile(ProfileData profileData)
+        {
+            var stream = NetworkStream();
+            
+            string s = JsonSerializer.Serialize(new Request
+            {
+                o=profileData,
+                requestOperation = RequestOperationEnum.CREATEPROFILE,
+            
+            });
+            byte[] dataToServer = Encoding.ASCII.GetBytes(s);
+            stream.Write(dataToServer, 0, dataToServer.Length);
+        }
+
+        public void CreatePreference(ProfileData profileData)
+        {
+            var stream = NetworkStream();
+            
+            string s = JsonSerializer.Serialize(new Request
+            {
+                o=profileData,
+                requestOperation = RequestOperationEnum.CREATEPREFERENCE,
+            
+            });
+            byte[] dataToServer = Encoding.ASCII.GetBytes(s);
+            stream.Write(dataToServer, 0, dataToServer.Length);
+        }
+
+        private byte[] TrimEmptyBytes(byte[] array)
+        {
+            int i = array.Length - 1;
+            while (array[i] == 0)
+            {
+                --i;
+            }
+
+            byte[] bar = new byte[i + 1];
+            Array.Copy(array, bar, i+1);
+            return bar;
+        }
         
         
         //Metoder til optimering
@@ -285,19 +324,6 @@ namespace MainServerAPI.Network
             }
             
             return stream;
-        }
-        
-        private byte[] TrimEmptyBytes(byte[] array)
-        {
-            int i = array.Length - 1;
-            while (array[i] == 0)
-            {
-                --i;
-            }
-
-            byte[] bar = new byte[i + 1];
-            Array.Copy(array, bar, i+1);
-            return bar;
         }
     }
 }
