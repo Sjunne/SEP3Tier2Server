@@ -1,4 +1,6 @@
-﻿namespace MainServerAPI.Data
+﻿using System;
+
+namespace MainServerAPI.Data
 {
     public class Review
     {
