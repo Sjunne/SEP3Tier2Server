@@ -50,6 +50,7 @@ namespace MainServerAPI.Network
             });
             Request request = WriteAndReadFromServer(s);
             ProfileData profileData = JsonSerializer.Deserialize<ProfileData>(request.o.ToString());
+            Console.WriteLine(profileData + "here");
             if (profileData == null)
             {
                 throw new NetworkIssue("ProfileData was null");
@@ -150,7 +151,8 @@ namespace MainServerAPI.Network
 
             byte[] fromServer = new byte[1024];
             stream.Read(fromServer, 0, fromServer.Length);
-            string s = Encoding.ASCII.GetString(fromServer);
+            var trimEmptyBytes = TrimEmptyBytes(fromServer);
+            string s = Encoding.ASCII.GetString(trimEmptyBytes);
             Request request = JsonSerializer.Deserialize<Request>(s);
             return request.requestOperation;
         }
@@ -198,7 +200,8 @@ namespace MainServerAPI.Network
 
             byte[] fromServer = new byte[1024];
             stream.Read(fromServer, 0, fromServer.Length);
-            string s = Encoding.ASCII.GetString(fromServer);
+            var trimEmptyBytes = TrimEmptyBytes(fromServer);
+            string s = Encoding.ASCII.GetString(trimEmptyBytes);
             Request request = JsonSerializer.Deserialize<Request>(s);
             return request.requestOperation;
         }

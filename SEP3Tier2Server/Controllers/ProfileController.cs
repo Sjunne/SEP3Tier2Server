@@ -51,6 +51,7 @@ namespace MainServerAPI.Controllers
             }
             catch (Exception e)
             {
+                Console.WriteLine(e.Message + "123");
                 return StatusCode(500, e.Message);
             }
             
