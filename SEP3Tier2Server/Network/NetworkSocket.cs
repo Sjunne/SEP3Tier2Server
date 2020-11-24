@@ -22,7 +22,7 @@ namespace MainServerAPI.Network
             
         }
         
-        public void updateProfile(ProfileData profile)
+        public RequestOperationEnum updateProfile(ProfileData profile)
         {
             var stream = NetworkStream();
 
@@ -35,6 +35,11 @@ namespace MainServerAPI.Network
             
             byte[] dataToServer = Encoding.ASCII.GetBytes(s);
             stream.Write(dataToServer, 0, dataToServer.Length);
+            
+            byte[] fromServer = new byte[1024];
+            stream.Read(fromServer, 0, fromServer.Length);
+            byte[] trimEmptyBytes = TrimEmptyBytes(fromServer);
+            return RequestEnum(trimEmptyBytes);
         }
 
         public ProfileData GetProfile(string username)
@@ -139,17 +144,20 @@ namespace MainServerAPI.Network
             var stream = NetworkStream();
             string json = JsonSerializer.Serialize(request);
             byte[] toServer = Encoding.ASCII.GetBytes(json);
+            Console.WriteLine(toServer.Length + " here");
             stream.Write(toServer, 0, toServer.Length);
             
             byte[] fromServer = new byte[1024];
             stream.Read(fromServer, 0, fromServer.Length);
-
-            string response = Encoding.ASCII.GetString(fromServer);
+            byte[] trimEmptyBytes = TrimEmptyBytes(fromServer);
+            string response = Encoding.ASCII.GetString(trimEmptyBytes);
+            
+            
             Request request1 = JsonSerializer.Deserialize<Request>(response);
             return request1.requestOperation;
         }
 
-        public void UpdateCover(string pictureName)
+        public RequestOperationEnum UpdateCover(string pictureName)
         {
             var stream = NetworkStream();
             string json = JsonSerializer.Serialize(new Request()
@@ -160,6 +168,13 @@ namespace MainServerAPI.Network
             });
             byte[] toServer = Encoding.ASCII.GetBytes(json);
             stream.Write(toServer, 0, toServer.Length);
+
+            byte[] fromServer = new byte[1024];
+            stream.Read(fromServer, 0, fromServer.Length);
+            var trimEmptyBytes = TrimEmptyBytes(fromServer);
+            string s = Encoding.ASCII.GetString(trimEmptyBytes);
+            Request request = JsonSerializer.Deserialize<Request>(s);
+            return request.requestOperation;
         }
 
         public byte[] GetProfilePicture(string username)
@@ -185,22 +200,30 @@ namespace MainServerAPI.Network
             {
                 throw new ServiceUnavailable("Lost database connection");
             }
-                
-            
+
             return fromServer;
         }
 
-        public void UpdateProfilePic(string pictureName)
+        public RequestOperationEnum UpdateProfilePic(string pictureName)
         {
             var stream = NetworkStream();
             string json = JsonSerializer.Serialize(new Request()
             {
+                //TODO: ret at username er her
+                
                 Username = "Maria",
                 o = pictureName,
                 requestOperation = RequestOperationEnum.UPDATEPROFILEPIC
             });
             byte[] toServer = Encoding.ASCII.GetBytes(json);
-            stream.Write(toServer, 0, toServer.Length);        
+            stream.Write(toServer, 0, toServer.Length);
+
+            byte[] fromServer = new byte[1024];
+            stream.Read(fromServer, 0, fromServer.Length);
+            var trimEmptyBytes = TrimEmptyBytes(fromServer);
+            string s = Encoding.ASCII.GetString(trimEmptyBytes);
+            Request request = JsonSerializer.Deserialize<Request>(s);
+            return request.requestOperation;
         }
 
         public RequestOperationEnum editProfile(Request request)
@@ -212,7 +235,9 @@ namespace MainServerAPI.Network
             
             byte[] fromServer = new byte[1024];
             stream.Read(fromServer, 0, fromServer.Length);
-            string response = Encoding.ASCII.GetString(fromServer);
+            byte[] trimEmptyBytes = TrimEmptyBytes(fromServer);
+            string response = Encoding.ASCII.GetString(trimEmptyBytes);
+
             Request requestResponse = JsonSerializer.Deserialize<Request>(response);
             return requestResponse.requestOperation;
         }
@@ -321,6 +346,12 @@ namespace MainServerAPI.Network
             return profileData;
         }
 
+        
+        
+       //private methods 
+        
+        
+        
         private byte[] TrimEmptyBytes(byte[] array)
         {
             int i = array.Length - 1;
@@ -374,6 +405,13 @@ namespace MainServerAPI.Network
             }
             
             return stream;
+        }
+        
+        private static RequestOperationEnum RequestEnum(byte[] fromServer)
+        {
+            string response = Encoding.ASCII.GetString(fromServer);
+            Request request = JsonSerializer.Deserialize<Request>(response);
+            return request.requestOperation;
         }
     }
 }
