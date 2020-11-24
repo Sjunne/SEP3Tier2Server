@@ -62,7 +62,7 @@ namespace MainServerAPI.Controllers
         public async Task<ActionResult<ProfileData>> EditProfile([FromBody]ProfileData profileData)
         {
             RequestOperationEnum requestOperationEnum = _network.updateProfile(profileData);
-            if(requestOperationEnum == RequestOperationEnum.ERROR)
+            if(requestOperationEnum == RequestOperationEnum.SUCCESS)
                return Created($"/{profileData.username}", profileData);
             
             return StatusCode(503);

@@ -35,7 +35,8 @@ namespace MainServerAPI.Network
             
             byte[] fromServer = new byte[1024];
             stream.Read(fromServer, 0, fromServer.Length);
-            return RequestEnum(fromServer);
+            byte[] trimEmptyBytes = TrimEmptyBytes(fromServer);
+            return RequestEnum(trimEmptyBytes);
         }
 
         public ProfileData GetProfile(string username)
@@ -126,6 +127,7 @@ namespace MainServerAPI.Network
             var stream = NetworkStream();
             string json = JsonSerializer.Serialize(request);
             byte[] toServer = Encoding.ASCII.GetBytes(json);
+            Console.WriteLine(toServer.Length + " here");
             stream.Write(toServer, 0, toServer.Length);
             
             byte[] fromServer = new byte[1024];
@@ -216,7 +218,9 @@ namespace MainServerAPI.Network
             
             byte[] fromServer = new byte[1024];
             stream.Read(fromServer, 0, fromServer.Length);
-            string response = Encoding.ASCII.GetString(fromServer);
+            byte[] trimEmptyBytes = TrimEmptyBytes(fromServer);
+            string response = Encoding.ASCII.GetString(trimEmptyBytes);
+
             Request requestResponse = JsonSerializer.Deserialize<Request>(response);
             return requestResponse.requestOperation;
         }
