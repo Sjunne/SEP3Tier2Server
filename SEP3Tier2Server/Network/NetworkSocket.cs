@@ -50,7 +50,6 @@ namespace MainServerAPI.Network
             });
             Request request = WriteAndReadFromServer(s);
             ProfileData profileData = JsonSerializer.Deserialize<ProfileData>(request.o.ToString());
-            Console.WriteLine(profileData + "here");
             if (profileData == null)
             {
                 throw new NetworkIssue("ProfileData was null");
@@ -293,9 +292,23 @@ namespace MainServerAPI.Network
             stream.Write(dataToServer, 0, dataToServer.Length);
         }
 
-        
-        
-       //private methods 
+        public RequestOperationEnum DeletePhoto(string pictureName)
+        {
+            var stream = NetworkStream();
+            
+            string s = JsonSerializer.Serialize(new Request
+            {
+                o=pictureName,
+                requestOperation = RequestOperationEnum.DELETEPHOTO,
+            
+            });
+            byte[] dataToServer = Encoding.ASCII.GetBytes(s);
+            stream.Write(dataToServer, 0, dataToServer.Length);
+            return RequestOperationEnum.SUCCESS;
+        }
+
+
+        //private methods 
         
         
         

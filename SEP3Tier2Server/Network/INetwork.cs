@@ -21,5 +21,6 @@ namespace MainServerAPI.Network
         void CreateProfile(ProfileData profileData);
 
         void CreatePreference(ProfileData profileData);
+        RequestOperationEnum DeletePhoto(string pictureName);
     }
 }
