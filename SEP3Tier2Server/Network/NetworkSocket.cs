@@ -130,8 +130,10 @@ namespace MainServerAPI.Network
             
             byte[] fromServer = new byte[1024];
             stream.Read(fromServer, 0, fromServer.Length);
-
-            string response = Encoding.ASCII.GetString(fromServer);
+            byte[] trimEmptyBytes = TrimEmptyBytes(fromServer);
+            string response = Encoding.ASCII.GetString(trimEmptyBytes);
+            
+            
             Request request1 = JsonSerializer.Deserialize<Request>(response);
             return request1.requestOperation;
         }
