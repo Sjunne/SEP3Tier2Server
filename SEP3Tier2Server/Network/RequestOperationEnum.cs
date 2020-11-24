@@ -19,6 +19,7 @@ namespace MainServerAPI.Network
         SUCCESS,
         ERROR,
         CREATEPROFILE,
-        CREATEPREFERENCE
+        CREATEPREFERENCE,
+        GETPREFERENCE
     }
 }
