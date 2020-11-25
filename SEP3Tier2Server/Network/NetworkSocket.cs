@@ -28,7 +28,7 @@ namespace MainServerAPI.Network
 
             string s = JsonSerializer.Serialize(new Request
             {
-            o=JsonSerializer.Serialize(profile),
+            o=profile,
             requestOperation = RequestOperationEnum.EDITINTRODUCTION,
             
             });

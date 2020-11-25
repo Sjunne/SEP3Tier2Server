@@ -2,6 +2,8 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SEP3Tier2Server", "SEP3Tier2Server\SEP3Tier2Server.csproj", "{33EA0C62-21A2-4452-B195-FE04FCD47B16}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SEP3Tier2ChatServer", "SEP3Tier2ChatServer\SEP3Tier2ChatServer.csproj", "{936A8417-E1FE-49FE-8EDC-94DE9BC27F53}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -12,5 +14,9 @@ Global
 		{33EA0C62-21A2-4452-B195-FE04FCD47B16}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{33EA0C62-21A2-4452-B195-FE04FCD47B16}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{33EA0C62-21A2-4452-B195-FE04FCD47B16}.Release|Any CPU.Build.0 = Release|Any CPU
+		{936A8417-E1FE-49FE-8EDC-94DE9BC27F53}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{936A8417-E1FE-49FE-8EDC-94DE9BC27F53}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{936A8417-E1FE-49FE-8EDC-94DE9BC27F53}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{936A8417-E1FE-49FE-8EDC-94DE9BC27F53}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

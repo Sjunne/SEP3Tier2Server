@@ -22,6 +22,7 @@ namespace MainServerAPI.Network
         CREATEPROFILE,
         CREATEPREFERENCE,
         DELETEPHOTO,
-        GETPREFERENCE
+        GETPREFERENCE,
+        GETCONNECTIONS
     }
 }
