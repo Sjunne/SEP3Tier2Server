@@ -25,7 +25,7 @@ namespace MainServerAPI.Network
         DELETEPROFILE,
         DELETEPHOTO,
         GETPREFERENCE,
-        GETCONNECTIONS
-        MATCHES,
+        GETCONNECTIONS,
+        MATCHES
     }
 }
