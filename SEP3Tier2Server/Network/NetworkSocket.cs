@@ -313,6 +313,26 @@ namespace MainServerAPI.Network
             stream.Write(dataToServer, 0, dataToServer.Length);
         }
 
+        public RequestOperationEnum DeletePhoto(string pictureName)
+        {
+            var stream = NetworkStream();
+            
+            string s = JsonSerializer.Serialize(new Request
+            {
+                o=pictureName,
+                requestOperation = RequestOperationEnum.DELETEPHOTO,
+            
+            });
+            byte[] dataToServer = Encoding.ASCII.GetBytes(s);
+            stream.Write(dataToServer, 0, dataToServer.Length);
+            return RequestOperationEnum.SUCCESS;
+        }
+
+
+        //private methods 
+        
+        
+        
         public ProfileData GetPreference(string username)
         {
             //Sender requesten om preference til Tier 3, med username som nøgle til database
@@ -392,6 +412,29 @@ namespace MainServerAPI.Network
         
         
         
+        
+        public IList<String> Matches(int userId)
+        {
+            string s = JsonSerializer.Serialize(new Request
+            {
+                o = userId,
+                requestOperation = RequestOperationEnum.MATCHES,
+                
+            });
+            Request request = WriteAndReadFromServer(s);
+            IList<String> profilesId = JsonSerializer.Deserialize<IList<String>>(request.o.ToString());
+            if (profilesId == null)
+            {
+                throw new NetworkIssue("No profiles found");
+            }
+            return profilesId; 
+        }
+        
+        
+        
+        
+
+        //private methods 
         private byte[] TrimEmptyBytes(byte[] array)
         {
             int i = array.Length - 1;

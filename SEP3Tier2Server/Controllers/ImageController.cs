@@ -141,5 +141,18 @@ namespace MainServerAPI.Controllers
             return StatusCode(200);
         }
 
+        [HttpDelete]
+        [Route("DeletePhoto/{pictureName}")]
+        public async Task<ActionResult> DeletePhoto([FromRoute]string pictureName)
+        {
+
+            RequestOperationEnum requestOperationEnum = _network.DeletePhoto(pictureName);
+            if (requestOperationEnum == RequestOperationEnum.ERROR)
+            {
+                
+                return StatusCode(503);
+            }
+            return Ok();
+        }
     }
 }
