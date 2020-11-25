@@ -1,20 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Mattias Leth\\RiderProjects\\SEP3Tier2Server\\SEP3Tier2ChatServer\\SEP3Tier2ChatServer.csproj": {}
+    "C:\\Users\\sjunn\\RiderProjects\\SEP3Tier2Server\\SEP3Tier2ChatServer\\SEP3Tier2ChatServer.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Mattias Leth\\RiderProjects\\SEP3Tier2Server\\SEP3Tier2ChatServer\\SEP3Tier2ChatServer.csproj": {
+    "C:\\Users\\sjunn\\RiderProjects\\SEP3Tier2Server\\SEP3Tier2ChatServer\\SEP3Tier2ChatServer.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Mattias Leth\\RiderProjects\\SEP3Tier2Server\\SEP3Tier2ChatServer\\SEP3Tier2ChatServer.csproj",
+        "projectUniqueName": "C:\\Users\\sjunn\\RiderProjects\\SEP3Tier2Server\\SEP3Tier2ChatServer\\SEP3Tier2ChatServer.csproj",
         "projectName": "SEP3Tier2ChatServer",
-        "projectPath": "C:\\Users\\Mattias Leth\\RiderProjects\\SEP3Tier2Server\\SEP3Tier2ChatServer\\SEP3Tier2ChatServer.csproj",
-        "packagesPath": "C:\\Users\\Mattias Leth\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Mattias Leth\\RiderProjects\\SEP3Tier2Server\\SEP3Tier2ChatServer\\obj\\",
+        "projectPath": "C:\\Users\\sjunn\\RiderProjects\\SEP3Tier2Server\\SEP3Tier2ChatServer\\SEP3Tier2ChatServer.csproj",
+        "packagesPath": "C:\\Users\\sjunn\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\sjunn\\RiderProjects\\SEP3Tier2Server\\SEP3Tier2ChatServer\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
         "configFilePaths": [
-          "C:\\Users\\Mattias Leth\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "C:\\Users\\sjunn\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "netcoreapp3.1"
@@ -25,8 +28,8 @@
         "frameworks": {
           "netcoreapp3.1": {
             "projectReferences": {
-              "C:\\Users\\Mattias Leth\\RiderProjects\\SEP3Tier2Server\\SEP3Tier2Server\\SEP3Tier2Server.csproj": {
-                "projectPath": "C:\\Users\\Mattias Leth\\RiderProjects\\SEP3Tier2Server\\SEP3Tier2Server\\SEP3Tier2Server.csproj"
+              "C:\\Users\\sjunn\\RiderProjects\\SEP3Tier2Server\\SEP3Tier2Server\\SEP3Tier2Server.csproj": {
+                "projectPath": "C:\\Users\\sjunn\\RiderProjects\\SEP3Tier2Server\\SEP3Tier2Server\\SEP3Tier2Server.csproj"
               }
             }
           }
@@ -57,21 +60,24 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.301\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.402\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "C:\\Users\\Mattias Leth\\RiderProjects\\SEP3Tier2Server\\SEP3Tier2Server\\SEP3Tier2Server.csproj": {
+    "C:\\Users\\sjunn\\RiderProjects\\SEP3Tier2Server\\SEP3Tier2Server\\SEP3Tier2Server.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Mattias Leth\\RiderProjects\\SEP3Tier2Server\\SEP3Tier2Server\\SEP3Tier2Server.csproj",
+        "projectUniqueName": "C:\\Users\\sjunn\\RiderProjects\\SEP3Tier2Server\\SEP3Tier2Server\\SEP3Tier2Server.csproj",
         "projectName": "SEP3Tier2Server",
-        "projectPath": "C:\\Users\\Mattias Leth\\RiderProjects\\SEP3Tier2Server\\SEP3Tier2Server\\SEP3Tier2Server.csproj",
-        "packagesPath": "C:\\Users\\Mattias Leth\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Mattias Leth\\RiderProjects\\SEP3Tier2Server\\SEP3Tier2Server\\obj\\",
+        "projectPath": "C:\\Users\\sjunn\\RiderProjects\\SEP3Tier2Server\\SEP3Tier2Server\\SEP3Tier2Server.csproj",
+        "packagesPath": "C:\\Users\\sjunn\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\sjunn\\RiderProjects\\SEP3Tier2Server\\SEP3Tier2Server\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
         "configFilePaths": [
-          "C:\\Users\\Mattias Leth\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "C:\\Users\\sjunn\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "netcoreapp3.1"
@@ -110,7 +116,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.301\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.402\\RuntimeIdentifierGraph.json"
         }
       }
     }
