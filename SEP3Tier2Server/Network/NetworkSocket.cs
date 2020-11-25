@@ -1,9 +1,12 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Net.Sockets;
 using System.Text;
 using System.Text.Json;
+using System.Text.RegularExpressions;
 using System.Threading;
 using MainServerAPI.Data;
 using Microsoft.AspNetCore.Mvc;
@@ -50,11 +53,25 @@ namespace MainServerAPI.Network
                 
             });
             Request request = WriteAndReadFromServer(s);
-            ProfileData profileData = JsonSerializer.Deserialize<ProfileData>(request.o.ToString());
+            string[] json= request.o.ToString().Split('}');
+            json[3] += "}";
+            foreach (var st in json)
+            {
+                Console.WriteLine(st);
+            }
+            char[] c= json[2].ToCharArray();
+           c[0] = '{';
+           json[2]=new string(c);
+           json[2] += "}";
+           ProfileData profileData = JsonSerializer.Deserialize<ProfileData>(json[2]);
+            
+            profileData.self = JsonSerializer.Deserialize<Details>(json[3]);
+            profileData.jsonSelf = json[3];
             if (profileData == null)
             {
                 throw new NetworkIssue("ProfileData was null");
             }
+            
             return profileData;
         }
 
@@ -316,6 +333,61 @@ namespace MainServerAPI.Network
         
         
         
+        public ProfileData GetPreference(string username)
+        {
+            //Sender requesten om preference til Tier 3, med username som nøgle til database
+            string s = JsonSerializer.Serialize(new Request
+            {
+                o = username,
+                requestOperation = RequestOperationEnum.GETPREFERENCE,
+                
+            });
+            Request request = WriteAndReadFromServer(s);
+            string[] json= request.o.ToString().Split('}');
+            json[3] += "}";
+            foreach (var st in json)
+            {
+                Console.WriteLine(st);
+            }
+            char[] c= json[2].ToCharArray();
+            c[0] = '{';
+            json[2]=new string(c);
+            json[2] += "}";
+            ProfileData profileData = JsonSerializer.Deserialize<ProfileData>(json[2]);
+            
+            profileData.preferences = JsonSerializer.Deserialize<Details>(json[3]);
+            profileData.jsonPref = json[3];
+            Console.WriteLine(profileData.preferences.gender);
+            if (profileData == null)
+            {
+                throw new NetworkIssue("ProfileData was null");
+            }
+            
+            return profileData;
+        }
+        
+        public IList<String> Matches(int userId)
+        {
+            string s = JsonSerializer.Serialize(new Request
+            {
+                o = userId,
+                requestOperation = RequestOperationEnum.MATCHES,
+                
+            });
+            Request request = WriteAndReadFromServer(s);
+            IList<String> profilesId = JsonSerializer.Deserialize<IList<String>>(request.o.ToString());
+            if (profilesId == null)
+            {
+                throw new NetworkIssue("No profiles found");
+            }
+            return profilesId; 
+        }
+        
+        
+        
+        
+
+        //private methods 
         private byte[] TrimEmptyBytes(byte[] array)
         {
             int i = array.Length - 1;

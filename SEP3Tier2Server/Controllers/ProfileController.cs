@@ -96,5 +96,29 @@ namespace MainServerAPI.Controllers
         {
             _network.CreatePreference(profileData);
         }
+        
+        [HttpGet]
+        [Route("Preference")]
+        public async Task<ActionResult<ProfileData>> GetPreference([FromQuery] string username)
+        {
+            ProfileData profileData;
+            try
+            {
+                profileData = _network.GetPreference(username);
+                Console.WriteLine(profileData.preferences.nationality);
+                Console.WriteLine(profileData.username);
+
+                if (profileData == null)
+                    return StatusCode(503);
+            }
+            catch (Exception e)
+            {
+                return StatusCode(500, e.Message);
+                
+            }
+
+
+            return Ok(profileData);
+        }
     }
 }
