@@ -23,8 +23,8 @@ namespace MainServerAPI.Network
         GETPREFERENCE,
         EDITPREFERENCE,
         EDITPROFILE,
-        DELETEPROFILE
+        DELETEPROFILE,
         DELETEPHOTO,
-        GETPREFERENCE
+        MATCHES,
     }
 }
