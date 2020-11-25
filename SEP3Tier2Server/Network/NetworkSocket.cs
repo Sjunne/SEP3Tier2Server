@@ -365,6 +365,53 @@ namespace MainServerAPI.Network
             
             return profileData;
         }
+
+        public void editPreference(ProfileData profileData)
+        {
+            var stream = NetworkStream();
+            
+            string s = JsonSerializer.Serialize(new Request
+            {
+                o=profileData,
+                requestOperation = RequestOperationEnum.EDITPREFERENCE,
+            
+            });
+            byte[] dataToServer = Encoding.ASCII.GetBytes(s);
+            stream.Write(dataToServer, 0, dataToServer.Length);
+        }
+
+        public void bigEditProfile(ProfileData profileData)
+        {
+            var stream = NetworkStream();
+            
+            string s = JsonSerializer.Serialize(new Request
+            {
+                o=profileData,
+                requestOperation = RequestOperationEnum.EDITPROFILE,
+            
+            });
+            byte[] dataToServer = Encoding.ASCII.GetBytes(s);
+            stream.Write(dataToServer, 0, dataToServer.Length);
+        }
+
+        public void deleteProfile(string username)
+        {
+            var stream = NetworkStream();
+            string s = JsonSerializer.Serialize(new Request
+            {
+                o=username,
+                requestOperation = RequestOperationEnum.DELETEPROFILE,
+            
+            });
+            byte[] dataToServer = Encoding.ASCII.GetBytes(s);
+            stream.Write(dataToServer, 0, dataToServer.Length);
+        }
+
+
+        //private methods 
+        
+        
+        
         
         public IList<String> Matches(int userId)
         {

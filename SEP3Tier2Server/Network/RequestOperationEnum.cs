@@ -10,7 +10,6 @@ namespace MainServerAPI.Network
         PROFILE, 
         COVER,
         PICTURES,
-        MATCHES,
         UPLOADPICTURE,
         EDITABOUT,
         REVIEWS,
@@ -21,8 +20,12 @@ namespace MainServerAPI.Network
         ERROR,
         CREATEPROFILE,
         CREATEPREFERENCE,
+        EDITPREFERENCE,
+        EDITPROFILE,
+        DELETEPROFILE,
         DELETEPHOTO,
         GETPREFERENCE,
         GETCONNECTIONS
+        MATCHES,
     }
 }

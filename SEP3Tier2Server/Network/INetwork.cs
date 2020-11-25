@@ -23,6 +23,9 @@ namespace MainServerAPI.Network
         void CreatePreference(ProfileData profileData);
         RequestOperationEnum DeletePhoto(string pictureName);
         ProfileData GetPreference(string username);
+        void editPreference(ProfileData profileData);
+        void bigEditProfile(ProfileData profileData);
+        void deleteProfile(string username);
         IList<String> Matches(int userId);
     }
 }

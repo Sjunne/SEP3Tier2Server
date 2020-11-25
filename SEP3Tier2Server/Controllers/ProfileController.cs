@@ -78,6 +78,63 @@ namespace MainServerAPI.Controllers
             else
                 return StatusCode(503, requestOperationEnum);    
         }
+
+        [HttpDelete]
+        [Route("delete")]
+        public async Task deleteProfile([FromQuery] string username)
+        {
+            _network.deleteProfile(username);
+        }
+        [HttpPost]
+        [Route("bigEditProfile")]
+        public async Task<ActionResult<Request>> bigEditProfile([FromBody] ProfileData profileData)
+        {
+            try
+            {
+                
+                Console.WriteLine(profileData.preferences.nationality);
+                Console.WriteLine(profileData.username);
+
+                if (profileData == null)
+                    return StatusCode(503);
+                
+                profileData.self= JsonSerializer.Deserialize<Details>(profileData.jsonSelf);
+                _network.bigEditProfile(profileData);
+            }
+            catch (Exception e)
+            {
+                return StatusCode(500, e.Message);
+                
+            }
+
+
+            return Ok(profileData);    
+        }
+        [HttpPost]
+        [Route("EditPreference")]
+        public async Task<ActionResult<Request>> EditPreference([FromBody] ProfileData profileData)
+        {
+            try
+            {
+                
+                Console.WriteLine(profileData.preferences.nationality);
+                Console.WriteLine(profileData.username);
+
+                if (profileData == null)
+                    return StatusCode(503);
+                
+                profileData.preferences= JsonSerializer.Deserialize<Details>(profileData.jsonPref);
+                _network.editPreference(profileData);
+            }
+            catch (Exception e)
+            {
+                return StatusCode(500, e.Message);
+                
+            }
+
+
+            return Ok(profileData);    
+        }
         
         [Route("CreateProfile")]
         [HttpPost]
