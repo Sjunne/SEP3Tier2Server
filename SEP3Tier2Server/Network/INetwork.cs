@@ -22,5 +22,6 @@ namespace MainServerAPI.Network
 
         void CreatePreference(ProfileData profileData);
         ProfileData GetPreference(string username);
+        IList<String> Matches(int userId);
     }
 }

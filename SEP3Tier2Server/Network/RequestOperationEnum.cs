@@ -10,6 +10,7 @@ namespace MainServerAPI.Network
         PROFILE, 
         COVER,
         PICTURES,
+        MATCHES,
         UPLOADPICTURE,
         EDITABOUT,
         REVIEWS,

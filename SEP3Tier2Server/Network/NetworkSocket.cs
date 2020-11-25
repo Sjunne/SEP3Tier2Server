@@ -345,13 +345,29 @@ namespace MainServerAPI.Network
             
             return profileData;
         }
+        
+        public IList<String> Matches(int userId)
+        {
+            string s = JsonSerializer.Serialize(new Request
+            {
+                o = userId,
+                requestOperation = RequestOperationEnum.MATCHES,
+                
+            });
+            Request request = WriteAndReadFromServer(s);
+            IList<String> profilesId = JsonSerializer.Deserialize<IList<String>>(request.o.ToString());
+            if (profilesId == null)
+            {
+                throw new NetworkIssue("No profiles found");
+            }
+            return profilesId; 
+        }
+        
+        
+        
+        
 
-        
-        
-       //private methods 
-        
-        
-        
+        //private methods 
         private byte[] TrimEmptyBytes(byte[] array)
         {
             int i = array.Length - 1;
