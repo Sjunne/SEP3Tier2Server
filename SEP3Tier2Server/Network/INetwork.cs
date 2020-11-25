@@ -22,5 +22,7 @@ namespace MainServerAPI.Network
 
         void CreatePreference(ProfileData profileData);
         ProfileData GetPreference(string username);
+        void editPreference(ProfileData profileData);
+        void bigEditProfile(ProfileData profileData);
     }
 }
