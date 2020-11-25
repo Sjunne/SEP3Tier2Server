@@ -22,6 +22,7 @@ namespace MainServerAPI.Network
         CREATEPREFERENCE,
         GETPREFERENCE,
         EDITPREFERENCE,
-        EDITPROFILE
+        EDITPROFILE,
+        DELETEPROFILE
     }
 }

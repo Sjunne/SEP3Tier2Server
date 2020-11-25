@@ -24,5 +24,6 @@ namespace MainServerAPI.Network
         ProfileData GetPreference(string username);
         void editPreference(ProfileData profileData);
         void bigEditProfile(ProfileData profileData);
+        void deleteProfile(string username);
     }
 }

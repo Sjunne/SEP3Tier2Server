@@ -374,6 +374,19 @@ namespace MainServerAPI.Network
             stream.Write(dataToServer, 0, dataToServer.Length);
         }
 
+        public void deleteProfile(string username)
+        {
+            var stream = NetworkStream();
+            string s = JsonSerializer.Serialize(new Request
+            {
+                o=username,
+                requestOperation = RequestOperationEnum.DELETEPROFILE,
+            
+            });
+            byte[] dataToServer = Encoding.ASCII.GetBytes(s);
+            stream.Write(dataToServer, 0, dataToServer.Length);
+        }
+
 
         //private methods 
         

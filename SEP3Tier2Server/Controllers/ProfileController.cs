@@ -78,7 +78,13 @@ namespace MainServerAPI.Controllers
             else
                 return StatusCode(503, requestOperationEnum);    
         }
-        
+
+        [HttpDelete]
+        [Route("delete")]
+        public async Task deleteProfile([FromQuery] string username)
+        {
+            _network.deleteProfile(username);
+        }
         [HttpPost]
         [Route("bigEditProfile")]
         public async Task<ActionResult<Request>> bigEditProfile([FromBody] ProfileData profileData)
