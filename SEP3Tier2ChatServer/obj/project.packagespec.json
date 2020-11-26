@@ -1,14 +1,11 @@
 ﻿{
   "version": "1.0.0",
   "restore": {
-    "projectUniqueName": "C:\\Users\\sjunn\\RiderProjects\\SEP3Tier2Server\\SEP3Tier2ChatServer\\SEP3Tier2ChatServer.csproj",
+    "projectUniqueName": "C:\\Users\\Kevin\\Desktop\\3. Semester\\SEP3Tier2Server\\SEP3Tier2ChatServer\\SEP3Tier2ChatServer.csproj",
     "projectName": "SEP3Tier2ChatServer",
-    "projectPath": "C:\\Users\\sjunn\\RiderProjects\\SEP3Tier2Server\\SEP3Tier2ChatServer\\SEP3Tier2ChatServer.csproj",
-    "outputPath": "C:\\Users\\sjunn\\RiderProjects\\SEP3Tier2Server\\SEP3Tier2ChatServer\\obj\\",
+    "projectPath": "C:\\Users\\Kevin\\Desktop\\3. Semester\\SEP3Tier2Server\\SEP3Tier2ChatServer\\SEP3Tier2ChatServer.csproj",
+    "outputPath": "C:\\Users\\Kevin\\Desktop\\3. Semester\\SEP3Tier2Server\\SEP3Tier2ChatServer\\obj\\",
     "projectStyle": "PackageReference",
-    "fallbackFolders": [
-      "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
-    ],
     "originalTargetFrameworks": [
       "netcoreapp3.1"
     ],
@@ -18,8 +15,8 @@
     "frameworks": {
       "netcoreapp3.1": {
         "projectReferences": {
-          "C:\\Users\\sjunn\\RiderProjects\\SEP3Tier2Server\\SEP3Tier2Server\\SEP3Tier2Server.csproj": {
-            "projectPath": "C:\\Users\\sjunn\\RiderProjects\\SEP3Tier2Server\\SEP3Tier2Server\\SEP3Tier2Server.csproj"
+          "C:\\Users\\Kevin\\Desktop\\3. Semester\\SEP3Tier2Server\\SEP3Tier2Server\\SEP3Tier2Server.csproj": {
+            "projectPath": "C:\\Users\\Kevin\\Desktop\\3. Semester\\SEP3Tier2Server\\SEP3Tier2Server\\SEP3Tier2Server.csproj"
           }
         }
       }
@@ -50,7 +47,7 @@
           "privateAssets": "all"
         }
       },
-      "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.402\\RuntimeIdentifierGraph.json"
+      "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.401\\RuntimeIdentifierGraph.json"
     }
   }
 }

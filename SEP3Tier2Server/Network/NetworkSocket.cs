@@ -50,7 +50,7 @@ namespace MainServerAPI.Network
             {
                 o = username,
                 requestOperation = RequestOperationEnum.PROFILE,
-                
+                Username = ""
             });
             Request request = WriteAndReadFromServer(s);
             string[] json= request.o.ToString().Split('}');
