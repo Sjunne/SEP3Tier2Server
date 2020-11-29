@@ -22,6 +22,12 @@ namespace MainServerAPI.Network
         CREATEPREFERENCE,
         GETPREFERENCE,
         VALIDATELOGIN,
-        REGISTERUSER
+        REGISTERUSER,
+        EDITPREFERENCE,
+        EDITPROFILE,
+        DELETEPROFILE,
+        DELETEPHOTO,
+        GETCONNECTIONS,
+        MATCHES
     }
 }

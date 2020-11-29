@@ -28,7 +28,7 @@ namespace MainServerAPI.Network
 
             string s = JsonSerializer.Serialize(new Request
             {
-            o=JsonSerializer.Serialize(profile),
+            o=profile,
             requestOperation = RequestOperationEnum.EDITINTRODUCTION,
             
             });
@@ -50,7 +50,7 @@ namespace MainServerAPI.Network
             {
                 o = username,
                 requestOperation = RequestOperationEnum.PROFILE,
-                
+                Username = ""
             });
             Request request = WriteAndReadFromServer(s);
             string[] json= request.o.ToString().Split('}');
@@ -280,7 +280,6 @@ namespace MainServerAPI.Network
 
                 review.image = encoded;
                 reviews.Add(review);
-
             }
             return reviews;
         }
@@ -313,6 +312,26 @@ namespace MainServerAPI.Network
             stream.Write(dataToServer, 0, dataToServer.Length);
         }
 
+        public RequestOperationEnum DeletePhoto(string pictureName)
+        {
+            var stream = NetworkStream();
+            
+            string s = JsonSerializer.Serialize(new Request
+            {
+                o=pictureName,
+                requestOperation = RequestOperationEnum.DELETEPHOTO,
+            
+            });
+            byte[] dataToServer = Encoding.ASCII.GetBytes(s);
+            stream.Write(dataToServer, 0, dataToServer.Length);
+            return RequestOperationEnum.SUCCESS;
+        }
+
+
+        //private methods 
+        
+        
+        
         public ProfileData GetPreference(string username)
         {
             //Sender requesten om preference til Tier 3, med username som nøgle til database
@@ -378,6 +397,75 @@ namespace MainServerAPI.Network
         
         
         
+        public void editPreference(ProfileData profileData)
+        {
+            var stream = NetworkStream();
+            
+            string s = JsonSerializer.Serialize(new Request
+            {
+                o=profileData,
+                requestOperation = RequestOperationEnum.EDITPREFERENCE,
+            
+            });
+            byte[] dataToServer = Encoding.ASCII.GetBytes(s);
+            stream.Write(dataToServer, 0, dataToServer.Length);
+        }
+
+        public void bigEditProfile(ProfileData profileData)
+        {
+            var stream = NetworkStream();
+            
+            string s = JsonSerializer.Serialize(new Request
+            {
+                o=profileData,
+                requestOperation = RequestOperationEnum.EDITPROFILE,
+            
+            });
+            byte[] dataToServer = Encoding.ASCII.GetBytes(s);
+            stream.Write(dataToServer, 0, dataToServer.Length);
+        }
+
+        public void deleteProfile(string username)
+        {
+            var stream = NetworkStream();
+            string s = JsonSerializer.Serialize(new Request
+            {
+                o=username,
+                requestOperation = RequestOperationEnum.DELETEPROFILE,
+            
+            });
+            byte[] dataToServer = Encoding.ASCII.GetBytes(s);
+            stream.Write(dataToServer, 0, dataToServer.Length);
+        }
+
+
+        //private methods 
+        
+        
+        
+        
+        public IList<String> Matches(int userId)
+        {
+            string s = JsonSerializer.Serialize(new Request
+            {
+                o = userId,
+                requestOperation = RequestOperationEnum.MATCHES,
+                
+            });
+            Request request = WriteAndReadFromServer(s);
+            IList<String> profilesId = JsonSerializer.Deserialize<IList<String>>(request.o.ToString());
+            if (profilesId == null)
+            {
+                throw new NetworkIssue("No profiles found");
+            }
+            return profilesId; 
+        }
+        
+        
+        
+        
+
+        //private methods 
         private byte[] TrimEmptyBytes(byte[] array)
         {
             int i = array.Length - 1;
