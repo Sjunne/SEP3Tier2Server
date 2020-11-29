@@ -53,13 +53,26 @@ namespace SEP3Tier2ChatServer
                         byte[] fromServer = new byte[1024];
                         int read = stream2to3.Read(fromServer, 0, fromServer.Length);
                         stream1to2.Write(fromServer, 0, fromServer.Length);
-                        
-                        
-                        
-                        
-                        
+                        var trimEmptyBytes = TrimEmptyBytes(fromServer);
 
-                        //Liste med Images
+                        //bruger listen til at checke Antallet af Connections, hvilket svarer til antallet af Images jeg skal hente
+                        var connectionses = JsonSerializer.Deserialize<IList<Connections>>(JsonSerializer.Deserialize<Request>(Encoding.ASCII.GetString(trimEmptyBytes)).o.ToString());
+                        int amountOfImages = connectionses.Count;
+                        
+                        //For Looper igennem antallet af billeder. laver array om til base 64 og sender et string array til Tier 1
+                        for (int i = 0; i < amountOfImages; i++)
+                        {
+                            byte[] arraysFromServer = new byte[1024 * 1024];
+                            int read2 = stream2to3.Read(arraysFromServer, 0, arraysFromServer.Length);
+                            var emptyBytes = TrimEmptyBytes(arraysFromServer);
+
+                            string image = Convert.ToBase64String(emptyBytes);
+                            string encoded = String.Format("data:image/gif;base64,{0}", image);
+                            
+                            var bytes1 = Encoding.ASCII.GetBytes(encoded);
+                            stream1to2.Write(bytes1,0,bytes1.Length);
+                        }
+
                         break;
                     }
                 }
@@ -86,6 +99,18 @@ namespace SEP3Tier2ChatServer
                 
              
             return stream;
+        }
+        private byte[] TrimEmptyBytes(byte[] array)
+        {
+            int i = array.Length - 1;
+            while (array[i] == 0)
+            {
+                --i;
+            }
+
+            byte[] bar = new byte[i + 1];
+            Array.Copy(array, bar, i+1);
+            return bar;
         }
     }
     

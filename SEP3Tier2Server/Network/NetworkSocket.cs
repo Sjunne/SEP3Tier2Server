@@ -280,7 +280,6 @@ namespace MainServerAPI.Network
 
                 review.image = encoded;
                 reviews.Add(review);
-
             }
             return reviews;
         }
