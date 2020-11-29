@@ -20,11 +20,13 @@ namespace MainServerAPI.Network
         ERROR,
         CREATEPROFILE,
         CREATEPREFERENCE,
+        GETPREFERENCE,
+        VALIDATELOGIN,
+        REGISTERUSER,
         EDITPREFERENCE,
         EDITPROFILE,
         DELETEPROFILE,
         DELETEPHOTO,
-        GETPREFERENCE,
         GETCONNECTIONS,
         MATCHES
     }

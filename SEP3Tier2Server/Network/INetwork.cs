@@ -27,5 +27,7 @@ namespace MainServerAPI.Network
         void bigEditProfile(ProfileData profileData);
         void deleteProfile(string username);
         IList<String> Matches(int userId);
+        Request ValidateLogin(User user);
+        void RegisterUser(Request request);
     }
 }
