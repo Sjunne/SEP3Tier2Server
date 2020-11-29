@@ -31,14 +31,12 @@ namespace MainServerAPI.Controllers
                     username = username,
                     password = password
                 });
+                
                 return Ok(request);
-            }
-            catch (NetworkIssue e)
-            {
-                return StatusCode(404, e.Message);
             }
             catch (ServiceUnavailable e)
             {
+                //kaster aldrig denne metode, hvad skal jeg så?
                 return StatusCode(503, e.Message);
             }
         }

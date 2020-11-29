@@ -55,10 +55,10 @@ namespace MainServerAPI.Network
             Request request = WriteAndReadFromServer(s);
             string[] json= request.o.ToString().Split('}');
             json[3] += "}";
-            foreach (var st in json)
+            /*foreach (var st in json)
             {
                 Console.WriteLine(st);
-            }
+            }*/
             char[] c= json[2].ToCharArray();
            c[0] = '{';
            json[2]=new string(c);
@@ -144,7 +144,7 @@ namespace MainServerAPI.Network
             var stream = NetworkStream();
             string json = JsonSerializer.Serialize(request);
             byte[] toServer = Encoding.ASCII.GetBytes(json);
-            Console.WriteLine(toServer.Length + " here");
+
             stream.Write(toServer, 0, toServer.Length);
             
             byte[] fromServer = new byte[1024];
@@ -356,7 +356,7 @@ namespace MainServerAPI.Network
             
             profileData.preferences = JsonSerializer.Deserialize<Details>(json[3]);
             profileData.jsonPref = json[3];
-            Console.WriteLine(profileData.preferences.gender);
+
             if (profileData == null)
             {
                 throw new NetworkIssue("ProfileData was null");
@@ -383,7 +383,7 @@ namespace MainServerAPI.Network
             
             string response = Encoding.ASCII.GetString(fromServer, 0, bytesRead);
             Request request = JsonSerializer.Deserialize<Request>(response);
-            Console.WriteLine(request.Username + " " + request.requestOperation + " here") ;
+
             return request;
         }
 
