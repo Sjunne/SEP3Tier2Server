@@ -22,5 +22,7 @@ namespace MainServerAPI.Network
 
         void CreatePreference(ProfileData profileData);
         ProfileData GetPreference(string username);
+        Request ValidateLogin(User user);
+        void RegisterUser(Request request);
     }
 }

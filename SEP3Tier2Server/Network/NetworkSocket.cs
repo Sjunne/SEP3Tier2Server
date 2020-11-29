@@ -346,9 +346,35 @@ namespace MainServerAPI.Network
             return profileData;
         }
 
-        
-        
-       //private methods 
+        public Request ValidateLogin(User user)
+        {
+            var stream = NetworkStream();
+
+            Request request1 = new Request()
+            {
+                Username = user.username,
+                o = user,
+                requestOperation = RequestOperationEnum.VALIDATELOGIN
+            };
+            string serialize = JsonSerializer.Serialize(request1);
+            byte[] dataToServer = Encoding.ASCII.GetBytes(serialize);
+            stream.Write(dataToServer, 0, dataToServer.Length);
+            byte[] fromServer = new byte[1024*1024];
+            int bytesRead = stream.Read(fromServer, 0, fromServer.Length);
+            
+            string response = Encoding.ASCII.GetString(fromServer, 0, bytesRead);
+            Request request = JsonSerializer.Deserialize<Request>(response);
+            Console.WriteLine(request.Username + " " + request.requestOperation + " here") ;
+            return request;
+        }
+
+        public void RegisterUser(Request request)
+        {
+            throw new NotImplementedException();
+        }
+
+
+        //private methods 
         
         
         

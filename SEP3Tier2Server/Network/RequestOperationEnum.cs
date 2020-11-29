@@ -20,6 +20,8 @@ namespace MainServerAPI.Network
         ERROR,
         CREATEPROFILE,
         CREATEPREFERENCE,
-        GETPREFERENCE
+        GETPREFERENCE,
+        VALIDATELOGIN,
+        REGISTERUSER
     }
 }
