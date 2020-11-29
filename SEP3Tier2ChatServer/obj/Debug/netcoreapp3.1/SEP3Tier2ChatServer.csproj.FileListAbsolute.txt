@@ -38,3 +38,23 @@ C:\Users\sjunn\RiderProjects\SEP3Tier2Server\SEP3Tier2ChatServer\obj\Debug\netco
 C:\Users\sjunn\RiderProjects\SEP3Tier2Server\SEP3Tier2ChatServer\obj\Debug\netcoreapp3.1\SEP3Tier2ChatServer.dll
 C:\Users\sjunn\RiderProjects\SEP3Tier2Server\SEP3Tier2ChatServer\obj\Debug\netcoreapp3.1\SEP3Tier2ChatServer.pdb
 C:\Users\sjunn\RiderProjects\SEP3Tier2Server\SEP3Tier2ChatServer\obj\Debug\netcoreapp3.1\SEP3Tier2ChatServer.genruntimeconfig.cache
+C:\Users\Kevin\Desktop\3. Semester\SEP3Tier2Server\SEP3Tier2ChatServer\bin\Debug\netcoreapp3.1\appsettings.Development.json
+C:\Users\Kevin\Desktop\3. Semester\SEP3Tier2Server\SEP3Tier2ChatServer\bin\Debug\netcoreapp3.1\appsettings.json
+C:\Users\Kevin\Desktop\3. Semester\SEP3Tier2Server\SEP3Tier2ChatServer\bin\Debug\netcoreapp3.1\Properties\launchSettings.json
+C:\Users\Kevin\Desktop\3. Semester\SEP3Tier2Server\SEP3Tier2ChatServer\bin\Debug\netcoreapp3.1\SEP3Tier2Server.exe
+C:\Users\Kevin\Desktop\3. Semester\SEP3Tier2Server\SEP3Tier2ChatServer\bin\Debug\netcoreapp3.1\SEP3Tier2ChatServer.exe
+C:\Users\Kevin\Desktop\3. Semester\SEP3Tier2Server\SEP3Tier2ChatServer\bin\Debug\netcoreapp3.1\SEP3Tier2ChatServer.deps.json
+C:\Users\Kevin\Desktop\3. Semester\SEP3Tier2Server\SEP3Tier2ChatServer\bin\Debug\netcoreapp3.1\SEP3Tier2ChatServer.runtimeconfig.json
+C:\Users\Kevin\Desktop\3. Semester\SEP3Tier2Server\SEP3Tier2ChatServer\bin\Debug\netcoreapp3.1\SEP3Tier2ChatServer.runtimeconfig.dev.json
+C:\Users\Kevin\Desktop\3. Semester\SEP3Tier2Server\SEP3Tier2ChatServer\bin\Debug\netcoreapp3.1\SEP3Tier2ChatServer.dll
+C:\Users\Kevin\Desktop\3. Semester\SEP3Tier2Server\SEP3Tier2ChatServer\bin\Debug\netcoreapp3.1\SEP3Tier2ChatServer.pdb
+C:\Users\Kevin\Desktop\3. Semester\SEP3Tier2Server\SEP3Tier2ChatServer\bin\Debug\netcoreapp3.1\SEP3Tier2Server.dll
+C:\Users\Kevin\Desktop\3. Semester\SEP3Tier2Server\SEP3Tier2ChatServer\bin\Debug\netcoreapp3.1\SEP3Tier2Server.pdb
+C:\Users\Kevin\Desktop\3. Semester\SEP3Tier2Server\SEP3Tier2ChatServer\obj\Debug\netcoreapp3.1\SEP3Tier2ChatServer.csprojAssemblyReference.cache
+C:\Users\Kevin\Desktop\3. Semester\SEP3Tier2Server\SEP3Tier2ChatServer\obj\Debug\netcoreapp3.1\SEP3Tier2ChatServer.AssemblyInfoInputs.cache
+C:\Users\Kevin\Desktop\3. Semester\SEP3Tier2Server\SEP3Tier2ChatServer\obj\Debug\netcoreapp3.1\SEP3Tier2ChatServer.AssemblyInfo.cs
+C:\Users\Kevin\Desktop\3. Semester\SEP3Tier2Server\SEP3Tier2ChatServer\obj\Debug\netcoreapp3.1\SEP3Tier2ChatServer.csproj.CoreCompileInputs.cache
+C:\Users\Kevin\Desktop\3. Semester\SEP3Tier2Server\SEP3Tier2ChatServer\obj\Debug\netcoreapp3.1\SEP3Tier2ChatServer.csproj.CopyComplete
+C:\Users\Kevin\Desktop\3. Semester\SEP3Tier2Server\SEP3Tier2ChatServer\obj\Debug\netcoreapp3.1\SEP3Tier2ChatServer.dll
+C:\Users\Kevin\Desktop\3. Semester\SEP3Tier2Server\SEP3Tier2ChatServer\obj\Debug\netcoreapp3.1\SEP3Tier2ChatServer.pdb
+C:\Users\Kevin\Desktop\3. Semester\SEP3Tier2Server\SEP3Tier2ChatServer\obj\Debug\netcoreapp3.1\SEP3Tier2ChatServer.genruntimeconfig.cache

@@ -34,5 +34,6 @@
 
 /.idea/
 /SEP3Tier2Server/bin/
-/SEP3Tier2Server/bin/
 /SEP3Tier2Server/obj/
+/SEP3Tier2ChatServer/bin/
+/SEP3Tier2ChatServer/obj/
