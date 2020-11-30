@@ -29,5 +29,6 @@ namespace MainServerAPI.Network
         IList<String> Matches(int userId);
         Request ValidateLogin(User user);
         void RegisterUser(Request request);
+        IList<PrivateMessage> getAllPrivateMessages(Request request);
     }
 }

@@ -24,7 +24,7 @@ namespace MainServerAPI.Network
         
         public RequestOperationEnum updateProfile(ProfileData profile)
         {
-            var stream = NetworkStream();
+                var stream = NetworkStream();
             profile.jsonSelf = null;
             profile.jsonPref = null;
             string s = JsonSerializer.Serialize(new Request
@@ -191,6 +191,7 @@ namespace MainServerAPI.Network
             
             byte[] fromServer = new byte[1024*1024];
             int read = stream.Read(fromServer, 0, fromServer.Length);
+            TrimEmptyBytes(fromServer);
 
             if (read == 1)
             {
@@ -390,6 +391,12 @@ namespace MainServerAPI.Network
         public void RegisterUser(Request request)
         {
             throw new NotImplementedException();
+        }
+
+        public IList<PrivateMessage> getAllPrivateMessages(Request request)
+        {
+            Console.WriteLine(request);
+            return new List<PrivateMessage>();
         }
 
 

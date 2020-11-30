@@ -28,6 +28,7 @@ namespace MainServerAPI.Network
         DELETEPROFILE,
         DELETEPHOTO,
         GETCONNECTIONS,
-        MATCHES
+        MATCHES,
+        GETALLMESSAGES
     }
 }

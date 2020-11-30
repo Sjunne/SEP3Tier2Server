@@ -11,7 +11,7 @@ namespace SEP3Tier2ChatServer
     public class SocketHandler
     {
         private NetworkStream stream1to2;
-        private string username { get; set; }
+        public string username { get; set; }
 
         public void HandleClient(TcpClient client, List<SocketHandler> clientList)
         {
