@@ -387,9 +387,19 @@ namespace MainServerAPI.Network
             return request;
         }
 
-        public void RegisterUser(Request request)
+        public Request RegisterUser(Request request)
         {
-            throw new NotImplementedException();
+            string serialize = JsonSerializer.Serialize(request);
+            Request writeAndReadFromServer = WriteAndReadFromServer(serialize);
+            
+            return writeAndReadFromServer;
+        }
+
+        public Request ChangePassword(Request request)
+        {
+            string serialize = JsonSerializer.Serialize(request);
+            Request writeAndReadFromServer = WriteAndReadFromServer(serialize);
+            return writeAndReadFromServer;
         }
 
 
@@ -484,8 +494,7 @@ namespace MainServerAPI.Network
         private Request WriteAndReadFromServer(string s)
         {
             var stream = NetworkStream();
-
-
+            
             byte[] dataToServer = Encoding.ASCII.GetBytes(s);
             stream.Write(dataToServer, 0, dataToServer.Length);
             byte[] fromServer = new byte[1024*1024];

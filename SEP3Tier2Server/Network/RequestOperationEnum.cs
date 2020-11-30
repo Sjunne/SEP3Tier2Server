@@ -29,6 +29,9 @@ namespace MainServerAPI.Network
         DELETEPHOTO,
         GETCONNECTIONS,
         MATCHES,
-        WRONGPASSWORD
+        WRONGPASSWORD,
+        NOTFOUND,
+        CHANGEPASSWORD,
+        WRONGUSERNAME,
     }
 }
