@@ -25,12 +25,12 @@ namespace MainServerAPI.Network
         public RequestOperationEnum updateProfile(ProfileData profile)
         {
             var stream = NetworkStream();
-
+            profile.jsonSelf = null;
+            profile.jsonPref = null;
             string s = JsonSerializer.Serialize(new Request
             {
-            o=profile,
+            o=JsonSerializer.Serialize(profile),
             requestOperation = RequestOperationEnum.EDITINTRODUCTION,
-            
             });
             
             byte[] dataToServer = Encoding.ASCII.GetBytes(s);
