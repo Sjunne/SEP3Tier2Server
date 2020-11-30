@@ -29,6 +29,10 @@ namespace MainServerAPI.Network
         DELETEPHOTO,
         GETCONNECTIONS,
         MATCHES,
-        GETALLMESSAGES
+        GETALLMESSAGES,
+        WRONGPASSWORD,
+        NOTFOUND,
+        CHANGEPASSWORD,
+        WRONGUSERNAME,
     }
 }

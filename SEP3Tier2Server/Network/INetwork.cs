@@ -28,7 +28,8 @@ namespace MainServerAPI.Network
         void deleteProfile(string username);
         IList<String> Matches(int userId);
         Request ValidateLogin(User user);
-        void RegisterUser(Request request);
         IList<PrivateMessage> getAllPrivateMessages(Request request);
+        Request RegisterUser(Request request);
+        Request ChangePassword(Request request);
     }
 }
