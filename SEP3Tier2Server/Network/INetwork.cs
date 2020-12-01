@@ -30,6 +30,6 @@ namespace MainServerAPI.Network
         Request ValidateLogin(User user);
         IList<PrivateMessage> getAllPrivateMessages(Request request);
         Request RegisterUser(Request request);
-        Request ChangePassword(Request request);
+        Request ChangePasswordOrUsername(Request request);
     }
 }

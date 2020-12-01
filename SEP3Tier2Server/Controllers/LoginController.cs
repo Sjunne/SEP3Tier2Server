@@ -31,6 +31,10 @@ namespace MainServerAPI.Controllers
                     username = username,
                     password = password
                 });
+                if (request.requestOperation == RequestOperationEnum.ERROR)
+                {
+                    return StatusCode(503, request.o);
+                }
                 
                 return Ok(request);
             }
@@ -45,15 +49,23 @@ namespace MainServerAPI.Controllers
         public async Task<ActionResult<Request>> RegisterUser ([FromBody] Request request)
         {
             Request response = _network.RegisterUser(request);
-            User user = JsonSerializer.Deserialize<User>(request.o.ToString());
-            Console.WriteLine(response);
-            return Created($"/{request.Username}", user);
+            //User user = JsonSerializer.Deserialize<User>(request.o.ToString());
+            //response.o = user;
+            if (request.requestOperation == RequestOperationEnum.ERROR)
+            {
+                return StatusCode(503, response);
+            }
+            return Created($"/{request.Username}", response);
         }
 
         [HttpPatch]
-        public async Task<ActionResult<Request>> ChangePassword([FromBody] Request request)
+        public async Task<ActionResult<Request>> ChangePasswordOrUsername([FromBody] Request request)
         {
-            Request response = _network.ChangePassword(request);
+            Request response = _network.ChangePasswordOrUsername(request);
+            if (request.requestOperation == RequestOperationEnum.ERROR)
+            {
+                return StatusCode(503, request.o);
+            }
             return Ok(response);
         }
     }
