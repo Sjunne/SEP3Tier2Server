@@ -19,9 +19,20 @@ namespace MainServerAPI.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IList<PrivateMessage>>> Get([FromQuery]Request request)
+        public async Task<ActionResult<IList<PrivateMessage>>> Get([FromQuery]string request)
         {
-            IList<PrivateMessage> listOfMessages = _network.getAllPrivateMessages(request);
+            var usernames = request.Split("|");
+            Console.WriteLine(usernames[0]);
+            Console.WriteLine(usernames[1]);
+
+            Request request1 = new Request()
+            {
+                Username = usernames[0],
+                o = usernames[1],
+                requestOperation =  RequestOperationEnum.GETALLMESSAGES
+            };
+            
+            IList<PrivateMessage> listOfMessages = _network.getAllPrivateMessages(request1);
             return Ok(listOfMessages);
         }
 

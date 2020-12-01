@@ -34,5 +34,5 @@ namespace MainServerAPI.Network
         NOTFOUND,
         CHANGEPASSWORD,
         WRONGUSERNAME,
-    }
+    }    
 }

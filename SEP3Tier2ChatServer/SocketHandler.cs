@@ -26,7 +26,7 @@ namespace SEP3Tier2ChatServer
             int bytesReadUsername = stream1to2.Read(usernameFromClient, 0, usernameFromClient.Length);
             s = Encoding.ASCII.GetString(usernameFromClient, 0, bytesReadUsername);
             username = s;
-            Console.WriteLine(username);
+            Console.WriteLine(username + "sockethandler");
             while (whileTrue)
             {
                 try

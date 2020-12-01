@@ -185,7 +185,8 @@ namespace MainServerAPI.Network
                 Username =  username,
                 requestOperation = RequestOperationEnum.PROFILEPIC
             });
-            
+
+            Console.WriteLine(username);
             byte[] dataToServer = Encoding.ASCII.GetBytes(s);
             stream.Write(dataToServer, 0, dataToServer.Length);
             
@@ -405,8 +406,27 @@ namespace MainServerAPI.Network
 
         public IList<PrivateMessage> getAllPrivateMessages(Request request)
         {
-            Console.WriteLine(request);
-            return new List<PrivateMessage>();
+            var stream = NetworkStream();
+            Console.WriteLine(request.o + "o");
+            Console.WriteLine(request.Username + "username");
+            Console.WriteLine(request.requestOperation + "requestOperation");
+
+            var serialize = JsonSerializer.Serialize(request);
+            byte[] dataToServer = Encoding.ASCII.GetBytes(serialize);
+            stream.Write(dataToServer, 0, dataToServer.Length);
+
+            byte[] fromServer = new byte[1024*1024];
+            int bytesRead = stream.Read(fromServer, 0, fromServer.Length);
+
+            //Tar Imod request gennem sockets
+            string response = Encoding.ASCII.GetString(fromServer, 0, bytesRead);
+            Request request1 = JsonSerializer.Deserialize<Request>(response);
+            Console.WriteLine(request1.o);
+            IList<PrivateMessage> messages = JsonSerializer.Deserialize<IList<PrivateMessage>>(request1.o.ToString());
+            Console.WriteLine(messages.Count + "here");
+            Console.WriteLine(messages[0] + "here2");
+
+            return messages;
         }
 
 
