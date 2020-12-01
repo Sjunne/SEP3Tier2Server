@@ -29,6 +29,6 @@ namespace MainServerAPI.Network
         IList<String> Matches(int userId);
         Request ValidateLogin(User user);
         Request RegisterUser(Request request);
-        Request ChangePassword(Request request);
+        Request ChangePasswordOrUsername(Request request);
     }
 }

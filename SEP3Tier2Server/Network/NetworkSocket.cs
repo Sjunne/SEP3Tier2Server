@@ -383,7 +383,6 @@ namespace MainServerAPI.Network
             
             string response = Encoding.ASCII.GetString(fromServer, 0, bytesRead);
             Request request = JsonSerializer.Deserialize<Request>(response);
-
             return request;
         }
 
@@ -395,7 +394,7 @@ namespace MainServerAPI.Network
             return writeAndReadFromServer;
         }
 
-        public Request ChangePassword(Request request)
+        public Request ChangePasswordOrUsername(Request request)
         {
             string serialize = JsonSerializer.Serialize(request);
             Request writeAndReadFromServer = WriteAndReadFromServer(serialize);
