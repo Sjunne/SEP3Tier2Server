@@ -30,6 +30,7 @@ namespace MainServerAPI.Network
         GETCONNECTIONS,
         MATCHES,
         ACCEPTMATCH,
+        DECLINEMATCH,
         GETPROFILEID,
         WRONGPASSWORD,
         NOTFOUND,

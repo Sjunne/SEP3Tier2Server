@@ -31,6 +31,7 @@ namespace MainServerAPI.Network
         Request RegisterUser(Request request);
 
         RequestOperationEnum AcceptMatch(IList<string> usernames);
+        RequestOperationEnum DeclineMatch(IList<string> usernames);
         Request ChangePasswordOrUsername(Request request);
     }
 }

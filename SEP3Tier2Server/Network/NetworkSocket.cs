@@ -394,6 +394,28 @@ namespace MainServerAPI.Network
             return writeAndReadFromServer;
         }
 
+        public RequestOperationEnum DeclineMatch(IList<string> usernames)
+        {
+            var stream = NetworkStream();
+            
+            string json = JsonSerializer.Serialize(new Request
+            {
+                
+                o=usernames,
+                requestOperation = RequestOperationEnum.DECLINEMATCH,
+            
+            });
+            byte[] toServer = Encoding.ASCII.GetBytes(json);
+            stream.Write(toServer, 0, toServer.Length);
+
+            byte[] fromServer = new byte[1024];
+            stream.Read(fromServer, 0, fromServer.Length);
+            var trimEmptyBytes = TrimEmptyBytes(fromServer);
+            string s = Encoding.ASCII.GetString(trimEmptyBytes);
+            Request request = JsonSerializer.Deserialize<Request>(s);
+            return request.requestOperation;
+        }
+
         public Request ChangePasswordOrUsername(Request request)
         {
             string serialize = JsonSerializer.Serialize(request);

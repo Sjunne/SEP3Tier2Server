@@ -39,10 +39,25 @@ namespace MainServerAPI.Controllers
         }
 
         [HttpPost]
+        [Route("Accept")]
         public async Task<ActionResult<int>> AcceptMatch([FromBody] IList<string> usernames)
         {
           
             RequestOperationEnum requestOperationEnum = _network.AcceptMatch(usernames);
+            if (requestOperationEnum == RequestOperationEnum.ERROR)
+            {
+                
+                return StatusCode(503);
+            }
+            
+            return StatusCode(200);
+        }
+        [HttpPost]
+        [Route("Decline")]
+        public async Task<ActionResult<int>> DeclineMatch([FromBody] IList<string> usernames)
+        {
+          
+            RequestOperationEnum requestOperationEnum = _network.DeclineMatch(usernames);
             if (requestOperationEnum == RequestOperationEnum.ERROR)
             {
                 
