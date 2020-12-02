@@ -401,6 +401,30 @@ namespace MainServerAPI.Network
             return writeAndReadFromServer;
         }
 
+        public RequestOperationEnum AcceptMatch(IList<string> usernames)
+        {
+            var stream = NetworkStream();
+            
+            string json = JsonSerializer.Serialize(new Request
+            {
+                
+                o=usernames,
+                requestOperation = RequestOperationEnum.ACCEPTMATCH,
+            
+            });
+            byte[] toServer = Encoding.ASCII.GetBytes(json);
+            stream.Write(toServer, 0, toServer.Length);
+
+            byte[] fromServer = new byte[1024];
+            stream.Read(fromServer, 0, fromServer.Length);
+            var trimEmptyBytes = TrimEmptyBytes(fromServer);
+            string s = Encoding.ASCII.GetString(trimEmptyBytes);
+            Request request = JsonSerializer.Deserialize<Request>(s);
+            return request.requestOperation;
+        
+        }
+        
+
 
         //private methods 
         
@@ -453,21 +477,21 @@ namespace MainServerAPI.Network
         
         
         
-        public IList<String> Matches(int userId)
+        public IList<String> Matches(string username)
         {
             string s = JsonSerializer.Serialize(new Request
             {
-                o = userId,
+                Username = username,
                 requestOperation = RequestOperationEnum.MATCHES,
                 
             });
             Request request = WriteAndReadFromServer(s);
-            IList<String> profilesId = JsonSerializer.Deserialize<IList<String>>(request.o.ToString());
-            if (profilesId == null)
+            IList<String> usernames = JsonSerializer.Deserialize<IList<String>>(request.o.ToString());
+            if (usernames == null)
             {
                 throw new NetworkIssue("No profiles found");
             }
-            return profilesId; 
+            return usernames; 
         }
         
         
