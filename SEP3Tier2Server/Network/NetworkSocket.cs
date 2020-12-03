@@ -162,6 +162,7 @@ namespace MainServerAPI.Network
             var stream = NetworkStream();
             string json = JsonSerializer.Serialize(new Request()
             {
+                //TODO: RET UPDATECOVER
                 Username = "Maria",
                 o = pictureName,
                 requestOperation = RequestOperationEnum.UPDATECOVER
