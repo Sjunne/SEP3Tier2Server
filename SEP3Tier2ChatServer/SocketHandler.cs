@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net.Sockets;
 using System.Text;
 using System.Text.Json;
@@ -33,25 +34,21 @@ namespace SEP3Tier2ChatServer
             s = Encoding.ASCII.GetString(usernameFromClient, 0, bytesReadUsername);
             username = s;
             Console.WriteLine(username + "sockethandler123");
-            
+            int first = 0;
+            int counter = 0;
             for (int i = 0; i < clientList.Count; i++)
             {
                 Console.WriteLine(clientList.Count + "here");
-                int first = 0;
-                int counter = 0;
+                
                 if (clientList[i].username.Equals(username))
                 {
-                    if (counter == 0)
-                    {
-                        first = i;
-                    }
                     counter++;
                 }
 
                 if (counter == 2)
                 {
                     Console.WriteLine("Vi fjerner en fra listen nu");
-                    clientList.RemoveAt(first);
+                    clientList.Remove(clientList.FirstOrDefault(sh => sh.username.Equals(username)));
                 }
             }
             
