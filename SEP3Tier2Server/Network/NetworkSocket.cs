@@ -52,6 +52,7 @@ namespace MainServerAPI.Network
                 requestOperation = RequestOperationEnum.PROFILE,
                 Username = ""
             });
+            Console.WriteLine(s + "den nyeste");
             Request request = WriteAndReadFromServer(s);
             string[] json= request.o.ToString().Split('}');
             json[3] += "}";
@@ -420,10 +421,7 @@ namespace MainServerAPI.Network
             //Tar Imod request gennem sockets
             string response = Encoding.ASCII.GetString(fromServer, 0, bytesRead);
             Request request1 = JsonSerializer.Deserialize<Request>(response);
-            Console.WriteLine(request1.o);
             IList<PrivateMessage> messages = JsonSerializer.Deserialize<IList<PrivateMessage>>(request1.o.ToString());
-            Console.WriteLine(messages.Count + "here");
-            Console.WriteLine(messages[0] + "here2");
 
             return messages;
         }

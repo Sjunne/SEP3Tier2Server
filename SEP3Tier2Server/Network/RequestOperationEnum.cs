@@ -35,5 +35,7 @@ namespace MainServerAPI.Network
         CHANGEPASSWORD,
         WRONGUSERNAME,
         CHANGEUSERNAME,
+        SENDMESSAGE,
+        NOTIFYABOUTMESSAGES
     }
 }
