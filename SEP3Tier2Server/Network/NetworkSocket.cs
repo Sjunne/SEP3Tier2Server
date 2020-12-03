@@ -191,6 +191,7 @@ namespace MainServerAPI.Network
             
             byte[] fromServer = new byte[1024*1024];
             int read = stream.Read(fromServer, 0, fromServer.Length);
+            TrimEmptyBytes(fromServer);
 
             if (read == 1)
             {
@@ -446,6 +447,28 @@ namespace MainServerAPI.Network
         
         }
         
+
+        public IList<PrivateMessage> getAllPrivateMessages(Request request)
+        {
+            var stream = NetworkStream();
+            Console.WriteLine(request.o + "o");
+            Console.WriteLine(request.Username + "username");
+            Console.WriteLine(request.requestOperation + "requestOperation");
+
+            var serialize = JsonSerializer.Serialize(request);
+            byte[] dataToServer = Encoding.ASCII.GetBytes(serialize);
+            stream.Write(dataToServer, 0, dataToServer.Length);
+
+            byte[] fromServer = new byte[1024*1024];
+            int bytesRead = stream.Read(fromServer, 0, fromServer.Length);
+
+            //Tar Imod request gennem sockets
+            string response = Encoding.ASCII.GetString(fromServer, 0, bytesRead);
+            Request request1 = JsonSerializer.Deserialize<Request>(response);
+            IList<PrivateMessage> messages = JsonSerializer.Deserialize<IList<PrivateMessage>>(request1.o.ToString());
+
+            return messages;
+        }
 
 
         //private methods 

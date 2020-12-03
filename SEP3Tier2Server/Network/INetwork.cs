@@ -28,6 +28,7 @@ namespace MainServerAPI.Network
         void deleteProfile(string username);
         IList<String> Matches(string username);
         Request ValidateLogin(User user);
+        IList<PrivateMessage> getAllPrivateMessages(Request request);
         Request RegisterUser(Request request);
 
         RequestOperationEnum AcceptMatch(IList<string> usernames);

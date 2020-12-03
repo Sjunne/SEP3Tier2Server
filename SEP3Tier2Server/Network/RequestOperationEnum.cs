@@ -32,10 +32,13 @@ namespace MainServerAPI.Network
         ACCEPTMATCH,
         DECLINEMATCH,
         GETPROFILEID,
+        GETALLMESSAGES,
         WRONGPASSWORD,
         NOTFOUND,
         CHANGEPASSWORD,
         WRONGUSERNAME,
         CHANGEUSERNAME,
+        SENDMESSAGE,
+        NOTIFYABOUTMESSAGES
     }
 }
