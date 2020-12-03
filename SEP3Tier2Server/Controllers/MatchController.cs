@@ -19,13 +19,13 @@ namespace MainServerAPI.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IList<String>>> getMatches([FromQuery] int userId)
+        public async Task<ActionResult<IList<String>>> getMatches([FromQuery] string username)
         {
-            IList<String> profilesId;
+            IList<String> usernames;
             try
             {
-                profilesId = _network.Matches(userId);
-                if (profilesId == null)
+                usernames = _network.Matches(username);
+                if (usernames == null)
                 {
                     return StatusCode(503);
                 }
@@ -35,7 +35,36 @@ namespace MainServerAPI.Controllers
                 return StatusCode(500, e);
             }
 
-            return Ok(profilesId);
+            return Ok(usernames);
+        }
+
+        [HttpPost]
+        [Route("Accept")]
+        public async Task<ActionResult<int>> AcceptMatch([FromBody] IList<string> usernames)
+        {
+          
+            RequestOperationEnum requestOperationEnum = _network.AcceptMatch(usernames);
+            if (requestOperationEnum == RequestOperationEnum.ERROR)
+            {
+                
+                return StatusCode(503);
+            }
+            
+            return StatusCode(200);
+        }
+        [HttpPost]
+        [Route("Decline")]
+        public async Task<ActionResult<int>> DeclineMatch([FromBody] IList<string> usernames)
+        {
+          
+            RequestOperationEnum requestOperationEnum = _network.DeclineMatch(usernames);
+            if (requestOperationEnum == RequestOperationEnum.ERROR)
+            {
+                
+                return StatusCode(503);
+            }
+            
+            return StatusCode(200);
         }
     }
 }

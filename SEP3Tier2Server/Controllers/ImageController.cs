@@ -16,12 +16,12 @@ namespace MainServerAPI.Controllers
     public class ImageController : ControllerBase
     {
         
-        private INetwork _network;
+            private INetwork _network;
 
-        public ImageController(INetwork network)
-        {
-            _network = network;
-        }
+            public ImageController(INetwork network)
+            {
+                _network = network;
+            }
 
         [HttpGet]
         public async Task<ActionResult<string>> Get([FromQuery]string username)

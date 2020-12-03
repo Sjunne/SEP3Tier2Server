@@ -192,6 +192,7 @@ namespace MainServerAPI.Network
             
             byte[] fromServer = new byte[1024*1024];
             int read = stream.Read(fromServer, 0, fromServer.Length);
+            TrimEmptyBytes(fromServer);
 
             if (read == 1)
             {
@@ -395,11 +396,79 @@ namespace MainServerAPI.Network
             return writeAndReadFromServer;
         }
 
+        public RequestOperationEnum DeclineMatch(IList<string> usernames)
+        {
+            var stream = NetworkStream();
+            
+            string json = JsonSerializer.Serialize(new Request
+            {
+                
+                o=usernames,
+                requestOperation = RequestOperationEnum.DECLINEMATCH,
+            
+            });
+            byte[] toServer = Encoding.ASCII.GetBytes(json);
+            stream.Write(toServer, 0, toServer.Length);
+
+            byte[] fromServer = new byte[1024];
+            stream.Read(fromServer, 0, fromServer.Length);
+            var trimEmptyBytes = TrimEmptyBytes(fromServer);
+            string s = Encoding.ASCII.GetString(trimEmptyBytes);
+            Request request = JsonSerializer.Deserialize<Request>(s);
+            return request.requestOperation;
+        }
+
         public Request ChangePasswordOrUsername(Request request)
         {
             string serialize = JsonSerializer.Serialize(request);
             Request writeAndReadFromServer = WriteAndReadFromServer(serialize);
             return writeAndReadFromServer;
+        }
+
+        public RequestOperationEnum AcceptMatch(IList<string> usernames)
+        {
+            var stream = NetworkStream();
+            
+            string json = JsonSerializer.Serialize(new Request
+            {
+                
+                o=usernames,
+                requestOperation = RequestOperationEnum.ACCEPTMATCH,
+            
+            });
+            byte[] toServer = Encoding.ASCII.GetBytes(json);
+            stream.Write(toServer, 0, toServer.Length);
+
+            byte[] fromServer = new byte[1024];
+            stream.Read(fromServer, 0, fromServer.Length);
+            var trimEmptyBytes = TrimEmptyBytes(fromServer);
+            string s = Encoding.ASCII.GetString(trimEmptyBytes);
+            Request request = JsonSerializer.Deserialize<Request>(s);
+            return request.requestOperation;
+        
+        }
+        
+
+        public IList<PrivateMessage> getAllPrivateMessages(Request request)
+        {
+            var stream = NetworkStream();
+            Console.WriteLine(request.o + "o");
+            Console.WriteLine(request.Username + "username");
+            Console.WriteLine(request.requestOperation + "requestOperation");
+
+            var serialize = JsonSerializer.Serialize(request);
+            byte[] dataToServer = Encoding.ASCII.GetBytes(serialize);
+            stream.Write(dataToServer, 0, dataToServer.Length);
+
+            byte[] fromServer = new byte[1024*1024];
+            int bytesRead = stream.Read(fromServer, 0, fromServer.Length);
+
+            //Tar Imod request gennem sockets
+            string response = Encoding.ASCII.GetString(fromServer, 0, bytesRead);
+            Request request1 = JsonSerializer.Deserialize<Request>(response);
+            IList<PrivateMessage> messages = JsonSerializer.Deserialize<IList<PrivateMessage>>(request1.o.ToString());
+
+            return messages;
         }
 
 
@@ -454,21 +523,21 @@ namespace MainServerAPI.Network
         
         
         
-        public IList<String> Matches(int userId)
+        public IList<String> Matches(string username)
         {
             string s = JsonSerializer.Serialize(new Request
             {
-                o = userId,
+                Username = username,
                 requestOperation = RequestOperationEnum.MATCHES,
                 
             });
             Request request = WriteAndReadFromServer(s);
-            IList<String> profilesId = JsonSerializer.Deserialize<IList<String>>(request.o.ToString());
-            if (profilesId == null)
+            IList<String> usernames = JsonSerializer.Deserialize<IList<String>>(request.o.ToString());
+            if (usernames == null)
             {
                 throw new NetworkIssue("No profiles found");
             }
-            return profilesId; 
+            return usernames; 
         }
         
         

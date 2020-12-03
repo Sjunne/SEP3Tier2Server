@@ -57,6 +57,7 @@ namespace MainServerAPI.Controllers
             
             return Ok(profileData);
         }
+        
 
         [HttpPost]
         public async Task<ActionResult<ProfileData>> EditProfile([FromBody]ProfileData profileData)
