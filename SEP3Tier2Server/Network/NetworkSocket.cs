@@ -192,7 +192,8 @@ namespace MainServerAPI.Network
             
             byte[] fromServer = new byte[1024*1024];
             int read = stream.Read(fromServer, 0, fromServer.Length);
-            TrimEmptyBytes(fromServer);
+            Console.WriteLine(read+"read 195");
+            
 
             if (read == 1)
             {
@@ -202,6 +203,7 @@ namespace MainServerAPI.Network
             {
                 throw new ServiceUnavailable("Lost database connection");
             }
+            TrimEmptyBytes(fromServer);
 
             return fromServer;
         }
@@ -548,6 +550,7 @@ namespace MainServerAPI.Network
         private byte[] TrimEmptyBytes(byte[] array)
         {
             int i = array.Length - 1;
+            Console.WriteLine(array.Length +"trimbytes");
             while (array[i] == 0)
             {
                 --i;
