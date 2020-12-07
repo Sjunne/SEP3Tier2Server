@@ -31,8 +31,8 @@ namespace MainServerAPI.Network
         IList<PrivateMessage> getAllPrivateMessages(Request request);
         Request RegisterUser(Request request);
 
-        RequestOperationEnum AcceptMatch(IList<string> usernames);
-        RequestOperationEnum DeclineMatch(IList<string> usernames);
+        RequestOperationEnum AcceptMatch(Match match);
+        RequestOperationEnum DeclineMatch(Match match);
         Request ChangePasswordOrUsername(Request request);
     }
 }
