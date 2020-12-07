@@ -34,6 +34,7 @@ namespace SEP3Tier2ChatServer
 
                     SocketHandler sh = new SocketHandler();
                     clientList.Add(sh);
+                    
                     Thread thread = new Thread(() => sh.HandleClient(client, clientList));
                     thread.IsBackground = true;
                     thread.Start();
