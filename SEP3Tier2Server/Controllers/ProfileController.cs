@@ -143,6 +143,7 @@ namespace MainServerAPI.Controllers
         {
             Details self = JsonSerializer.Deserialize<Details>(profileData.jsonSelf);
             profileData.self = self;
+            
 
             _network.CreateProfile(profileData);
         }
@@ -152,6 +153,9 @@ namespace MainServerAPI.Controllers
         [HttpPost]
         public async Task CreatePreference([FromBody] ProfileData profileData)
         {
+            Details self = JsonSerializer.Deserialize<Details>(profileData.jsonPref);
+            profileData.preferences = self;
+            
             _network.CreatePreference(profileData);
         }
         

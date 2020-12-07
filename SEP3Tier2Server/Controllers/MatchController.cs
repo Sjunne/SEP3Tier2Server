@@ -40,17 +40,16 @@ namespace MainServerAPI.Controllers
 
         [HttpPost]
         [Route("Accept")]
-        public async Task<ActionResult<int>> AcceptMatch([FromBody] Match match)
+        public async Task<ActionResult<Match>> AcceptMatch([FromBody] Match match)
         {
-          
             RequestOperationEnum requestOperationEnum = _network.AcceptMatch(match);
             if (requestOperationEnum == RequestOperationEnum.ERROR)
             {
-                
                 return StatusCode(503);
             }
-            
-            return StatusCode(200);
+
+            return Created($"/{match.usernames[0]}", match);
+
         }
         [HttpPost]
         [Route("Decline")]
