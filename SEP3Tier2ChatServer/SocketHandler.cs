@@ -51,11 +51,11 @@ namespace SEP3Tier2ChatServer
                     clientList.Remove(clientList.FirstOrDefault(sh => sh.username.Equals(username)));
                 }
             }
-            
+            try
+            {
             while (whileTrue)
             {
-                try
-                {
+                
                     Console.WriteLine("Jeg str og venter");
                     //Read
                     byte[] dataFromClient = new byte[1024];
@@ -131,14 +131,14 @@ namespace SEP3Tier2ChatServer
                             }
                     }
                 }
-                catch (Exception e)
-                {
-                    Console.WriteLine(e);
-                    Console.WriteLine("vi er her");
-                }
+               
             }
             
-
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                Console.WriteLine("vi er her");
+            }
         }
         
         
