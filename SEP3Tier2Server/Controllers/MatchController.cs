@@ -40,10 +40,10 @@ namespace MainServerAPI.Controllers
 
         [HttpPost]
         [Route("Accept")]
-        public async Task<ActionResult<int>> AcceptMatch([FromBody] IList<string> usernames)
+        public async Task<ActionResult<int>> AcceptMatch([FromBody] Match match)
         {
           
-            RequestOperationEnum requestOperationEnum = _network.AcceptMatch(usernames);
+            RequestOperationEnum requestOperationEnum = _network.AcceptMatch(match);
             if (requestOperationEnum == RequestOperationEnum.ERROR)
             {
                 
@@ -54,10 +54,10 @@ namespace MainServerAPI.Controllers
         }
         [HttpPost]
         [Route("Decline")]
-        public async Task<ActionResult<int>> DeclineMatch([FromBody] IList<string> usernames)
+        public async Task<ActionResult<int>> DeclineMatch([FromBody] Match match)
         {
           
-            RequestOperationEnum requestOperationEnum = _network.DeclineMatch(usernames);
+            RequestOperationEnum requestOperationEnum = _network.DeclineMatch(match);
             if (requestOperationEnum == RequestOperationEnum.ERROR)
             {
                 

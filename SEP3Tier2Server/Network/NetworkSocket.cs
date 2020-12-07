@@ -12,6 +12,7 @@ using MainServerAPI.Data;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.VisualBasic.CompilerServices;
 using SEP3Tier2Server.Exceptions;
+using Match = MainServerAPI.Data.Match;
 
 namespace MainServerAPI.Network
 {
@@ -398,14 +399,14 @@ namespace MainServerAPI.Network
             return writeAndReadFromServer;
         }
 
-        public RequestOperationEnum DeclineMatch(IList<string> usernames)
+        public RequestOperationEnum DeclineMatch(Match match)
         {
             var stream = NetworkStream();
             
             string json = JsonSerializer.Serialize(new Request
             {
                 
-                o=usernames,
+                o=match,
                 requestOperation = RequestOperationEnum.DECLINEMATCH,
             
             });
@@ -427,14 +428,14 @@ namespace MainServerAPI.Network
             return writeAndReadFromServer;
         }
 
-        public RequestOperationEnum AcceptMatch(IList<string> usernames)
+        public RequestOperationEnum AcceptMatch(Match match)
         {
             var stream = NetworkStream();
             
             string json = JsonSerializer.Serialize(new Request
             {
                 
-                o=usernames,
+                o=match,
                 requestOperation = RequestOperationEnum.ACCEPTMATCH,
             
             });
