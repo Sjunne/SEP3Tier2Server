@@ -16,12 +16,12 @@ namespace MainServerAPI.Controllers
     public class ImageController : ControllerBase
     {
         
-        private INetwork _network;
+            private INetwork _network;
 
-        public ImageController(INetwork network)
-        {
-            _network = network;
-        }
+            public ImageController(INetwork network)
+            {
+                _network = network;
+            }
 
         [HttpGet]
         public async Task<ActionResult<string>> Get([FromQuery]string username)
@@ -68,11 +68,8 @@ namespace MainServerAPI.Controllers
             {
                 return StatusCode(503, e.Message);
             }
-                
 
-           
 
-            
         }
 
         [HttpPost]
@@ -81,7 +78,6 @@ namespace MainServerAPI.Controllers
             RequestOperationEnum requestOperationEnum = _network.UploadImage(request);
             if (requestOperationEnum == RequestOperationEnum.SUCCESS)
             {
-                Console.WriteLine("I AM HERE");
                 return Created($"/added", request);
             }
            

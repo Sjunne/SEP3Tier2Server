@@ -26,8 +26,13 @@ namespace MainServerAPI.Network
         void editPreference(ProfileData profileData);
         void bigEditProfile(ProfileData profileData);
         void deleteProfile(string username);
-        IList<String> Matches(int userId);
+        IList<String> Matches(string username);
         Request ValidateLogin(User user);
-        void RegisterUser(Request request);
+        IList<PrivateMessage> getAllPrivateMessages(Request request);
+        Request RegisterUser(Request request);
+
+        RequestOperationEnum AcceptMatch(Match match);
+        RequestOperationEnum DeclineMatch(Match match);
+        Request ChangePasswordOrUsername(Request request);
     }
 }

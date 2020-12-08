@@ -31,14 +31,16 @@ namespace MainServerAPI.Controllers
                     username = username,
                     password = password
                 });
+                if (request.requestOperation == RequestOperationEnum.ERROR)
+                {
+                    return StatusCode(503, request.o);
+                }
+                
                 return Ok(request);
-            }
-            catch (NetworkIssue e)
-            {
-                return StatusCode(404, e.Message);
             }
             catch (ServiceUnavailable e)
             {
+                //kaster aldrig denne metode, hvad skal jeg så?
                 return StatusCode(503, e.Message);
             }
         }
@@ -46,9 +48,25 @@ namespace MainServerAPI.Controllers
         [HttpPost]
         public async Task<ActionResult<Request>> RegisterUser ([FromBody] Request request)
         {
-            _network.RegisterUser(request);
-            User user = JsonSerializer.Deserialize<User>(request.o.ToString());
-            return Created($"/{request.Username}", user);
+            Request response = _network.RegisterUser(request);
+            //User user = JsonSerializer.Deserialize<User>(request.o.ToString());
+            //response.o = user;
+            if (request.requestOperation == RequestOperationEnum.ERROR)
+            {
+                return StatusCode(503, response);
+            }
+            return Created($"/{request.Username}", response);
+        }
+
+        [HttpPatch]
+        public async Task<ActionResult<Request>> ChangePasswordOrUsername([FromBody] Request request)
+        {
+            Request response = _network.ChangePasswordOrUsername(request);
+            if (request.requestOperation == RequestOperationEnum.ERROR)
+            {
+                return StatusCode(503, request.o);
+            }
+            return Ok(response);
         }
     }
 }

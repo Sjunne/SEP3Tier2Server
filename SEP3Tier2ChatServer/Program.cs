@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
@@ -24,18 +26,29 @@ namespace SEP3Tier2ChatServer
 
             while (true)
             {
-                TcpClient client = listener.AcceptTcpClient();
-                Console.WriteLine("Client connected..");
+                try
+                {
+                    TcpClient client = listener.AcceptTcpClient();
+                    Console.WriteLine("Client connected..");
                 
 
-                SocketHandler sh = new SocketHandler();
-                clientList.Add(sh);
-                Thread thread = new Thread(() => sh.HandleClient(client, clientList));
+                    SocketHandler sh = new SocketHandler();
+                    clientList.Add(sh);
+                    
+                    Thread thread = new Thread(() => sh.HandleClient(client, clientList));
+                    thread.IsBackground = true;
+                    thread.Start();
+                }
+                catch (Exception e)
+                {
+                    
+                }
                 
-                thread.Start();
             }
             
             
         }
     }
+    
+    
 }

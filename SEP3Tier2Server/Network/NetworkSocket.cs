@@ -12,6 +12,7 @@ using MainServerAPI.Data;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.VisualBasic.CompilerServices;
 using SEP3Tier2Server.Exceptions;
+using Match = MainServerAPI.Data.Match;
 
 namespace MainServerAPI.Network
 {
@@ -25,12 +26,12 @@ namespace MainServerAPI.Network
         public RequestOperationEnum updateProfile(ProfileData profile)
         {
             var stream = NetworkStream();
-
+            profile.jsonSelf = null;
+            profile.jsonPref = null;
             string s = JsonSerializer.Serialize(new Request
             {
-            o=profile,
+            o=JsonSerializer.Serialize(profile),
             requestOperation = RequestOperationEnum.EDITINTRODUCTION,
-            
             });
             
             byte[] dataToServer = Encoding.ASCII.GetBytes(s);
@@ -55,10 +56,10 @@ namespace MainServerAPI.Network
             Request request = WriteAndReadFromServer(s);
             string[] json= request.o.ToString().Split('}');
             json[3] += "}";
-            foreach (var st in json)
+            /*foreach (var st in json)
             {
                 Console.WriteLine(st);
-            }
+            }*/
             char[] c= json[2].ToCharArray();
            c[0] = '{';
            json[2]=new string(c);
@@ -144,7 +145,7 @@ namespace MainServerAPI.Network
             var stream = NetworkStream();
             string json = JsonSerializer.Serialize(request);
             byte[] toServer = Encoding.ASCII.GetBytes(json);
-            Console.WriteLine(toServer.Length + " here");
+
             stream.Write(toServer, 0, toServer.Length);
             
             byte[] fromServer = new byte[1024];
@@ -162,6 +163,7 @@ namespace MainServerAPI.Network
             var stream = NetworkStream();
             string json = JsonSerializer.Serialize(new Request()
             {
+                //TODO: RET UPDATECOVER
                 Username = "Maria",
                 o = pictureName,
                 requestOperation = RequestOperationEnum.UPDATECOVER
@@ -191,6 +193,8 @@ namespace MainServerAPI.Network
             
             byte[] fromServer = new byte[1024*1024];
             int read = stream.Read(fromServer, 0, fromServer.Length);
+            Console.WriteLine(read+"read 195");
+            
 
             if (read == 1)
             {
@@ -200,6 +204,7 @@ namespace MainServerAPI.Network
             {
                 throw new ServiceUnavailable("Lost database connection");
             }
+            TrimEmptyBytes(fromServer);
 
             return fromServer;
         }
@@ -288,6 +293,8 @@ namespace MainServerAPI.Network
         {
             var stream = NetworkStream();
             
+            
+            
             string s = JsonSerializer.Serialize(new Request
             {
                 o=profileData,
@@ -356,7 +363,7 @@ namespace MainServerAPI.Network
             
             profileData.preferences = JsonSerializer.Deserialize<Details>(json[3]);
             profileData.jsonPref = json[3];
-            Console.WriteLine(profileData.preferences.gender);
+
             if (profileData == null)
             {
                 throw new NetworkIssue("ProfileData was null");
@@ -383,13 +390,90 @@ namespace MainServerAPI.Network
             
             string response = Encoding.ASCII.GetString(fromServer, 0, bytesRead);
             Request request = JsonSerializer.Deserialize<Request>(response);
-            Console.WriteLine(request.Username + " " + request.requestOperation + " here") ;
             return request;
         }
 
-        public void RegisterUser(Request request)
+        public Request RegisterUser(Request request)
         {
-            throw new NotImplementedException();
+            string serialize = JsonSerializer.Serialize(request);
+            Request writeAndReadFromServer = WriteAndReadFromServer(serialize);
+            
+            return writeAndReadFromServer;
+        }
+
+        public RequestOperationEnum DeclineMatch(Match match)
+        {
+            var stream = NetworkStream();
+            
+            string json = JsonSerializer.Serialize(new Request
+            {
+                
+                o=match,
+                requestOperation = RequestOperationEnum.DECLINEMATCH,
+            
+            });
+            byte[] toServer = Encoding.ASCII.GetBytes(json);
+            stream.Write(toServer, 0, toServer.Length);
+
+            byte[] fromServer = new byte[1024];
+            stream.Read(fromServer, 0, fromServer.Length);
+            var trimEmptyBytes = TrimEmptyBytes(fromServer);
+            string s = Encoding.ASCII.GetString(trimEmptyBytes);
+            Request request = JsonSerializer.Deserialize<Request>(s);
+            return request.requestOperation;
+        }
+
+        public Request ChangePasswordOrUsername(Request request)
+        {
+            string serialize = JsonSerializer.Serialize(request);
+            Request writeAndReadFromServer = WriteAndReadFromServer(serialize);
+            return writeAndReadFromServer;
+        }
+
+        public RequestOperationEnum AcceptMatch(Match match)
+        {
+            var stream = NetworkStream();
+            
+            string json = JsonSerializer.Serialize(new Request
+            {
+                
+                o=match,
+                requestOperation = RequestOperationEnum.ACCEPTMATCH,
+            
+            });
+            byte[] toServer = Encoding.ASCII.GetBytes(json);
+            stream.Write(toServer, 0, toServer.Length);
+
+            byte[] fromServer = new byte[1024];
+            stream.Read(fromServer, 0, fromServer.Length);
+            var trimEmptyBytes = TrimEmptyBytes(fromServer);
+            string s = Encoding.ASCII.GetString(trimEmptyBytes);
+            Request request = JsonSerializer.Deserialize<Request>(s);
+            return request.requestOperation;
+        
+        }
+        
+
+        public IList<PrivateMessage> getAllPrivateMessages(Request request)
+        {
+            var stream = NetworkStream();
+            Console.WriteLine(request.o + "o");
+            Console.WriteLine(request.Username + "username");
+            Console.WriteLine(request.requestOperation + "requestOperation");
+
+            var serialize = JsonSerializer.Serialize(request);
+            byte[] dataToServer = Encoding.ASCII.GetBytes(serialize);
+            stream.Write(dataToServer, 0, dataToServer.Length);
+
+            byte[] fromServer = new byte[1024*1024];
+            int bytesRead = stream.Read(fromServer, 0, fromServer.Length);
+
+            //Tar Imod request gennem sockets
+            string response = Encoding.ASCII.GetString(fromServer, 0, bytesRead);
+            Request request1 = JsonSerializer.Deserialize<Request>(response);
+            IList<PrivateMessage> messages = JsonSerializer.Deserialize<IList<PrivateMessage>>(request1.o.ToString());
+
+            return messages;
         }
 
 
@@ -444,21 +528,21 @@ namespace MainServerAPI.Network
         
         
         
-        public IList<String> Matches(int userId)
+        public IList<String> Matches(string username)
         {
             string s = JsonSerializer.Serialize(new Request
             {
-                o = userId,
+                Username = username,
                 requestOperation = RequestOperationEnum.MATCHES,
                 
             });
             Request request = WriteAndReadFromServer(s);
-            IList<String> profilesId = JsonSerializer.Deserialize<IList<String>>(request.o.ToString());
-            if (profilesId == null)
+            IList<String> usernames = JsonSerializer.Deserialize<IList<String>>(request.o.ToString());
+            if (usernames == null)
             {
                 throw new NetworkIssue("No profiles found");
             }
-            return profilesId; 
+            return usernames; 
         }
         
         
@@ -469,6 +553,7 @@ namespace MainServerAPI.Network
         private byte[] TrimEmptyBytes(byte[] array)
         {
             int i = array.Length - 1;
+            Console.WriteLine(array.Length +"trimbytes");
             while (array[i] == 0)
             {
                 --i;
@@ -484,8 +569,7 @@ namespace MainServerAPI.Network
         private Request WriteAndReadFromServer(string s)
         {
             var stream = NetworkStream();
-
-
+            
             byte[] dataToServer = Encoding.ASCII.GetBytes(s);
             stream.Write(dataToServer, 0, dataToServer.Length);
             byte[] fromServer = new byte[1024*1024];
