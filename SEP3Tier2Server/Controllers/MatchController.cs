@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text.Json;
 using System.Threading.Tasks;
 using MainServerAPI.Data;
 using MainServerAPI.Network;
@@ -51,6 +52,8 @@ namespace MainServerAPI.Controllers
             return Created($"/{match.usernames[0]}", match);
 
         }
+        
+        
         [HttpPost]
         [Route("Decline")]
         public async Task<ActionResult<int>> DeclineMatch([FromBody] Match match)
@@ -64,6 +67,27 @@ namespace MainServerAPI.Controllers
             }
             
             return StatusCode(200);
+        }
+        
+        [HttpPost]
+        [Route("NewReview")]
+        public async Task<ActionResult<Match>> AddNewReview([FromBody] Review review)
+        {
+            Console.WriteLine("Hello");
+            Request request = new Request()
+            {
+                Username = review.username,
+                o = JsonSerializer.Serialize(review),
+                requestOperation = RequestOperationEnum.ADDREVIEW
+            };
+            Request response = _network.AddReview(request);
+            
+            if (request.requestOperation == RequestOperationEnum.ERROR)
+            {
+                return StatusCode(503, response);
+            }
+            return Created($"/{request.Username}", response);
+
         }
     }
 }

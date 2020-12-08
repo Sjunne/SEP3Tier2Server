@@ -39,6 +39,8 @@ namespace MainServerAPI.Network
         WRONGUSERNAME,
         CHANGEUSERNAME,
         SENDMESSAGE,
-        NOTIFYABOUTMESSAGES
+        NOTIFYABOUTMESSAGES,
+        ADDREVIEW,
+        SETUSERNAME
     }
 }
