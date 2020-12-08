@@ -49,8 +49,7 @@ namespace MainServerAPI.Controllers
         public async Task<ActionResult<Request>> RegisterUser ([FromBody] Request request)
         {
             Request response = _network.RegisterUser(request);
-            //User user = JsonSerializer.Deserialize<User>(request.o.ToString());
-            //response.o = user;
+            
             if (request.requestOperation == RequestOperationEnum.ERROR)
             {
                 return StatusCode(503, response);
