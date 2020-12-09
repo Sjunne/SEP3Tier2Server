@@ -39,5 +39,6 @@ namespace MainServerAPI.Network
         RequestOperationEnum CreateMatch(Match match);
 
 
+        Request AddReview(Request request);
     }
 }
