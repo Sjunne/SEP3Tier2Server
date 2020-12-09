@@ -76,6 +76,24 @@ namespace MainServerAPI.Network
             return profileData;
         }
 
+        public IList<string> getAllProfiles()
+        {
+            string s = JsonSerializer.Serialize(new Request
+            {
+                o = "profiles",
+                requestOperation = RequestOperationEnum.ALLPROFILES,
+                Username = ""
+            });
+            Request request = WriteAndReadFromServer(s);
+            IList<string> Usernames = JsonSerializer.Deserialize<IList<string>>(request.o.ToString());
+            if (Usernames == null)
+            {
+                throw new NetworkIssue("ProfileData was null");
+            }
+
+            return Usernames;
+        }
+
      
 
         public Byte[] GetCover(string username)
@@ -333,6 +351,18 @@ namespace MainServerAPI.Network
             return RequestOperationEnum.SUCCESS;
         }
 
+        public RequestOperationEnum CreateMatch(Match match)
+        {
+            var stream = NetworkStream();
+            string s = JsonSerializer.Serialize(new Request
+            {
+                o=match,
+                requestOperation = RequestOperationEnum.CREATEMATCH
+            });
+            byte[] dataToServer = Encoding.ASCII.GetBytes(s);
+            stream.Write(dataToServer, 0, dataToServer.Length);
+            return RequestOperationEnum.SUCCESS;
+        }
 
         //private methods 
         
@@ -350,10 +380,10 @@ namespace MainServerAPI.Network
             Request request = WriteAndReadFromServer(s);
             string[] json= request.o.ToString().Split('}');
             json[3] += "}";
-            foreach (var st in json)
+            /*foreach (var st in json)
             {
                 Console.WriteLine(st);
-            }
+            }*/
             char[] c= json[2].ToCharArray();
             c[0] = '{';
             json[2]=new string(c);
@@ -430,6 +460,22 @@ namespace MainServerAPI.Network
         }
 
         public Request AddReview(Request request)
+        {
+            var stream = NetworkStream();
+
+            string json = JsonSerializer.Serialize(request);
+            byte[] toServer = Encoding.ASCII.GetBytes(json);
+            stream.Write(toServer, 0, toServer.Length);
+
+            byte[] fromServer = new byte[1024];
+            stream.Read(fromServer, 0, fromServer.Length);
+            var trimEmptyBytes = TrimEmptyBytes(fromServer);
+            string s = Encoding.ASCII.GetString(trimEmptyBytes);
+            Request response = JsonSerializer.Deserialize<Request>(s);
+            return response;
+        }
+
+        public Request ReportReview(Request request)
         {
             var stream = NetworkStream();
 

@@ -73,7 +73,6 @@ namespace MainServerAPI.Controllers
         [Route("NewReview")]
         public async Task<ActionResult<Match>> AddNewReview([FromBody] Review review)
         {
-            Console.WriteLine("Hello");
             Request request = new Request()
             {
                 Username = review.username,
@@ -87,6 +86,22 @@ namespace MainServerAPI.Controllers
                 return StatusCode(503, response);
             }
             return Created($"/{request.Username}", response);
+
+        }
+        
+        [HttpPatch]
+        [Route("Report")]
+        public async Task<ActionResult<Match>> ReportReview([FromBody] Request request)
+        {
+            Console.WriteLine("Hello");
+         
+            Request response = _network.ReportReview(request);
+            
+            if (request.requestOperation == RequestOperationEnum.ERROR)
+            {
+                return StatusCode(503, response);
+            }
+            return Ok(response);
 
         }
     }
