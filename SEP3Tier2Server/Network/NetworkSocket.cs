@@ -444,6 +444,22 @@ namespace MainServerAPI.Network
             return response;
         }
 
+        public Request ReportReview(Request request)
+        {
+            var stream = NetworkStream();
+
+            string json = JsonSerializer.Serialize(request);
+            byte[] toServer = Encoding.ASCII.GetBytes(json);
+            stream.Write(toServer, 0, toServer.Length);
+
+            byte[] fromServer = new byte[1024];
+            stream.Read(fromServer, 0, fromServer.Length);
+            var trimEmptyBytes = TrimEmptyBytes(fromServer);
+            string s = Encoding.ASCII.GetString(trimEmptyBytes);
+            Request response = JsonSerializer.Deserialize<Request>(s);
+            return response;
+        }
+
         public RequestOperationEnum AcceptMatch(Match match)
         {
             var stream = NetworkStream();

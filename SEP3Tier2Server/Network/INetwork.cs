@@ -35,5 +35,6 @@ namespace MainServerAPI.Network
         RequestOperationEnum DeclineMatch(Match match);
         Request ChangePasswordOrUsername(Request request);
         Request AddReview(Request request);
+        Request ReportReview(Request request);
     }
 }

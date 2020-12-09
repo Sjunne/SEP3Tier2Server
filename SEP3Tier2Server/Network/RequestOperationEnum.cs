@@ -41,6 +41,7 @@ namespace MainServerAPI.Network
         SENDMESSAGE,
         NOTIFYABOUTMESSAGES,
         ADDREVIEW,
-        SETUSERNAME
+        SETUSERNAME,
+        REPORTREVIEW
     }
 }
