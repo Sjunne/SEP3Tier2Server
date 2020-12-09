@@ -13,7 +13,6 @@ namespace MainServerAPI.Data
         public Model()
         {
             network = new NetworkSocket();
-            
         }
         
         public void FindMatches()

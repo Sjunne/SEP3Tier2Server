@@ -41,8 +41,7 @@ namespace MainServerAPI.Network
         SENDMESSAGE,
         NOTIFYABOUTMESSAGES,
         ALLPROFILES,
-        CREATEMATCH
-        NOTIFYABOUTMESSAGES,
+        CREATEMATCH,
         ADDREVIEW,
         SETUSERNAME,
         REPORTREVIEW
