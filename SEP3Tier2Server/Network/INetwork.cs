@@ -34,6 +34,11 @@ namespace MainServerAPI.Network
         RequestOperationEnum AcceptMatch(Match match);
         RequestOperationEnum DeclineMatch(Match match);
         Request ChangePasswordOrUsername(Request request);
+
+        IList<string> getAllProfiles();
+        RequestOperationEnum CreateMatch(Match match);
+
+
         Request AddReview(Request request);
         Request ReportReview(Request request);
     }
