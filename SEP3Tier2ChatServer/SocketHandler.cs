@@ -68,14 +68,28 @@ namespace SEP3Tier2ChatServer
                             for (int i = 0; i < amountOfImages; i++)
                             {
                                 byte[] arraysFromServer = new byte[1024 * 1024];
+                                Console.WriteLine("venter på read");
                                 int read2 = stream2to3.Read(arraysFromServer, 0, arraysFromServer.Length);
-                                var emptyBytes = TrimEmptyBytes(arraysFromServer);
+                                if (read2 != 1)
+                                {
+                                    Console.WriteLine("Sender et ikke byte array");
 
-                                string image = Convert.ToBase64String(emptyBytes);
-                                string encoded = String.Format("data:image/gif;base64,{0}", image);
+                                    var emptyBytes = TrimEmptyBytes(arraysFromServer);
+                                
+                                    string image = Convert.ToBase64String(emptyBytes);
+                                    string encoded = String.Format("data:image/gif;base64,{0}", image);
 
-                                var bytes1 = Encoding.ASCII.GetBytes(encoded);
-                                stream1to2.Write(bytes1, 0, bytes1.Length);
+                                    var bytes1 = Encoding.ASCII.GetBytes(encoded);
+                                    stream1to2.Write(bytes1, 0, bytes1.Length);
+                                }
+                                else
+                                {
+                                    Console.WriteLine("Sender 1 byte array");
+                                    var bytes2 = new byte[1];
+                                    stream1to2.Write(bytes2, 0, bytes2.Length);
+                                }
+                                
+                               
                             }
 
                             break;

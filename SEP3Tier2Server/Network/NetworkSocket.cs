@@ -198,6 +198,7 @@ namespace MainServerAPI.Network
 
             if (read == 1)
             {
+                Console.WriteLine("profile pic not found");
                 throw new NetworkIssue("Profile Picture was not found");
             }
             else if (read == 2)
