@@ -39,8 +39,13 @@ namespace MainServerAPI.Network
         WRONGUSERNAME,
         CHANGEUSERNAME,
         SENDMESSAGE,
-        NOTIFYABOUTMESSAGES,
         GETWARNING,
-        REMOVEWARNING
+        REMOVEWARNING,
+        NOTIFYABOUTMESSAGES,
+        ALLPROFILES,
+        CREATEMATCH,
+        ADDREVIEW,
+        SETUSERNAME,
+        REPORTREVIEW
     }
 }

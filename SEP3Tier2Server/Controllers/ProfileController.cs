@@ -144,6 +144,7 @@ using Microsoft.AspNetCore.Mvc;
         {
             Details self = JsonSerializer.Deserialize<Details>(profileData.jsonSelf);
             profileData.self = self;
+            
 
             _network.CreateProfile(profileData);
         }
@@ -153,6 +154,9 @@ using Microsoft.AspNetCore.Mvc;
         [HttpPost]
         public async Task CreatePreference([FromBody] ProfileData profileData)
         {
+            Details self = JsonSerializer.Deserialize<Details>(profileData.jsonPref);
+            profileData.preferences = self;
+            
             _network.CreatePreference(profileData);
         }
         

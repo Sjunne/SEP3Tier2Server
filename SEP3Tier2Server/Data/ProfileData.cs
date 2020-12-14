@@ -39,6 +39,17 @@ namespace MainServerAPI.Data
         public string interests { get; set; }
 
         public string spotify { get; set; }
+        
+        public string toString()
+        {
+            return "ProfileData{" + "FirstName: " + firstName + " LastName: " + lastName + " Age: " + age + " Education: " + education + " City: " + city + " Hobbies: " +
+                   self.hobbies + " HairColor: " + self.hairColor + " EyeColor: " + self.eyeColor + " SkinColor: " + self.skinColor + " Nationality: " +
+                   self.nationality + " BodyShape: " + self.bodyShape + " Job: " + self.job + " Gender: " + self.gender + " HaveKids: " + self.kids + " SeeksRelationship: " + self.lookingFor + "}" + "\n"
+                   + "Preference{" + "MaximumAge: " + preferences.maximumAge + " MinimumAge: " + preferences.minimumAge + " Education: " + preferences.education + " City: " + preferences.city +
+                   " Hobbies: " + preferences.hobbies + " HairColor: " + preferences.hairColor + " EyeColor: " + preferences.eyeColor + " SkinColor: " + preferences.skinColor +
+                   " Nationality: " + preferences.nationality + " BodyShape: " + preferences.bodyShape + " Job: " + preferences.job + " Gender: " + preferences.gender + " WantPeopleWhoHaveKids: " + preferences.kids + " WantPeopleWhoWantRelationShip: " + preferences.lookingFor+
+                   "}" + "\n";
+        }
 
     }
 }
