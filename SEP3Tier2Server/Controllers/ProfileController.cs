@@ -7,8 +7,9 @@ using MainServerAPI.Data;
 using MainServerAPI.Network;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
+ using WebApplication.Data;
 
-namespace MainServerAPI.Controllers
+ namespace MainServerAPI.Controllers
 {
     
     [ApiController]
@@ -177,6 +178,39 @@ namespace MainServerAPI.Controllers
 
 
             return Ok(profileData);
+        }
+
+        [HttpGet]
+        [Route("Warning")]
+        public async Task<ActionResult<Warning>> getWarning([FromQuery] string username)
+        {
+            Warning warning;
+            try
+            {
+                warning = _network.GetWarning(username);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+
+            return Ok(warning);
+        }
+
+        [HttpDelete]
+        [Route("RemoveWarning")]
+        public async Task removeWarning([FromQuery] string username)
+        {
+            try
+            {
+                _network.RemoveWarning(username);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
         }
     }
 }

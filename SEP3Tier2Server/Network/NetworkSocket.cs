@@ -12,6 +12,7 @@ using MainServerAPI.Data;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.VisualBasic.CompilerServices;
 using SEP3Tier2Server.Exceptions;
+using WebApplication.Data;
 using Match = MainServerAPI.Data.Match;
 
 namespace MainServerAPI.Network
@@ -76,7 +77,34 @@ namespace MainServerAPI.Network
             return profileData;
         }
 
-     
+        public Warning GetWarning(String username)
+        {
+            string s = JsonSerializer.Serialize(new Request
+            {
+            Username = username,
+            requestOperation = RequestOperationEnum.GETWARNING
+            });
+
+            Request request = WriteAndReadFromServer(s);
+            Warning warning1 = JsonSerializer.Deserialize<Warning>(request.o.ToString());
+
+            return warning1;
+        }
+
+        public RequestOperationEnum RemoveWarning(string username)
+        {var stream = NetworkStream();
+            Console.Write(username);
+            string s = JsonSerializer.Serialize(new Request
+            {
+                Username= username,
+                requestOperation = RequestOperationEnum.REMOVEWARNING,
+            
+            });
+            byte[] dataToServer = Encoding.ASCII.GetBytes(s);
+            stream.Write(dataToServer, 0, dataToServer.Length);
+            return RequestOperationEnum.SUCCESS;
+        }
+
 
         public Byte[] GetCover(string username)
         {

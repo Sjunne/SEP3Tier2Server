@@ -1,13 +1,17 @@
 ﻿﻿using System;
  using System.Collections.Generic;
  using MainServerAPI.Data;
+ using WebApplication.Data;
 
-namespace MainServerAPI.Network
+ namespace MainServerAPI.Network
 {
     public interface INetwork
     {
         RequestOperationEnum updateProfile(ProfileData profile);
         ProfileData GetProfile(string username);
+
+        Warning GetWarning(String username);
+        RequestOperationEnum RemoveWarning(String username);
 
         byte[] GetCover(string username);
         List<byte[]> GetPictures(string username);
