@@ -20,10 +20,10 @@ namespace MainServerAPI.Network
 {
     public class NetworkSocket : INetwork
     {
-        private DataService _service;
+        private DataService service;
         public NetworkSocket()
         {
-            _service = new DataService();
+            service = new DataService();
         }
         
         public RequestOperationEnum updateProfile(ProfileData profile)
@@ -42,7 +42,7 @@ namespace MainServerAPI.Network
             
             byte[] fromServer = new byte[1024];
             stream.Read(fromServer, 0, fromServer.Length);
-            byte[] trimEmptyBytes = _service.TrimEmptyBytes(fromServer);
+            byte[] trimEmptyBytes = service.TrimEmptyBytes(fromServer);
             return RequestEnum(trimEmptyBytes);
         }
 
@@ -57,7 +57,7 @@ namespace MainServerAPI.Network
                 Username = ""
             });
             Request request = WriteAndReadFromServer(s);
-            var json = _service.SplitJson(request);
+            var json = service.SplitJson(request);
             ProfileData profileData = JsonSerializer.Deserialize<ProfileData>(json[2]);
             
             profileData.self = JsonSerializer.Deserialize<Details>(json[3]);
@@ -144,7 +144,7 @@ namespace MainServerAPI.Network
             {
                 throw new ServiceUnavailable("Database Connection Lost");
             }
-            return _service.Base64ImagesToString(fromServer);
+            return service.Base64ImagesToString(fromServer);
         }
 
         public string GetPictures(string username)
@@ -177,9 +177,9 @@ namespace MainServerAPI.Network
             {
                 byte[] read = new byte[1024*1024];
                 stream.Read(read, 0, read.Length);
-                list.Add(_service.TrimEmptyBytes(read));
+                list.Add(service.TrimEmptyBytes(read));
             }
-            return _service.Base64ImagesToString(list);
+            return service.Base64ImagesToString(list);
         }
 
         public RequestOperationEnum UploadImage(Request request)
@@ -192,7 +192,7 @@ namespace MainServerAPI.Network
             
             byte[] fromServer = new byte[1024];
             stream.Read(fromServer, 0, fromServer.Length);
-            byte[] trimEmptyBytes = _service.TrimEmptyBytes(fromServer);
+            byte[] trimEmptyBytes = service.TrimEmptyBytes(fromServer);
             string response = Encoding.ASCII.GetString(trimEmptyBytes);
             
             
@@ -209,7 +209,7 @@ namespace MainServerAPI.Network
 
             byte[] fromServer = new byte[1024];
             stream.Read(fromServer, 0, fromServer.Length);
-            var trimEmptyBytes = _service.TrimEmptyBytes(fromServer);
+            var trimEmptyBytes = service.TrimEmptyBytes(fromServer);
             string s = Encoding.ASCII.GetString(trimEmptyBytes);
             Request request = JsonSerializer.Deserialize<Request>(s);
             return request.requestOperation;
@@ -240,9 +240,9 @@ namespace MainServerAPI.Network
             {
                 throw new ServiceUnavailable("Lost database connection");
             }
-            fromServer= _service.TrimEmptyBytes(fromServer);
+            fromServer= service.TrimEmptyBytes(fromServer);
 
-            return _service.Base64ImagesToString(fromServer);
+            return service.Base64ImagesToString(fromServer);
         }
 
         public RequestOperationEnum UpdateProfilePic(Request r)
@@ -254,7 +254,7 @@ namespace MainServerAPI.Network
 
             byte[] fromServer = new byte[1024];
             stream.Read(fromServer, 0, fromServer.Length);
-            var trimEmptyBytes = _service.TrimEmptyBytes(fromServer);
+            var trimEmptyBytes = service.TrimEmptyBytes(fromServer);
             string s = Encoding.ASCII.GetString(trimEmptyBytes);
             Request request = JsonSerializer.Deserialize<Request>(s);
             return request.requestOperation;
@@ -269,7 +269,7 @@ namespace MainServerAPI.Network
             
             byte[] fromServer = new byte[1024];
             stream.Read(fromServer, 0, fromServer.Length);
-            byte[] trimEmptyBytes = _service.TrimEmptyBytes(fromServer);
+            byte[] trimEmptyBytes = service.TrimEmptyBytes(fromServer);
             string response = Encoding.ASCII.GetString(trimEmptyBytes);
 
             Request requestResponse = JsonSerializer.Deserialize<Request>(response);
@@ -388,7 +388,7 @@ namespace MainServerAPI.Network
                 
             });
             Request request = WriteAndReadFromServer(s);
-            var json = _service.SplitJson(request);
+            var json = service.SplitJson(request);
             ProfileData profileData = JsonSerializer.Deserialize<ProfileData>(json[2]);
             
             profileData.preferences = JsonSerializer.Deserialize<Details>(json[3]);
@@ -449,7 +449,7 @@ namespace MainServerAPI.Network
 
             byte[] fromServer = new byte[1024];
             stream.Read(fromServer, 0, fromServer.Length);
-            var trimEmptyBytes = _service.TrimEmptyBytes(fromServer);
+            var trimEmptyBytes = service.TrimEmptyBytes(fromServer);
             string s = Encoding.ASCII.GetString(trimEmptyBytes);
             Request request = JsonSerializer.Deserialize<Request>(s);
             return request.requestOperation;
@@ -472,7 +472,7 @@ namespace MainServerAPI.Network
 
             byte[] fromServer = new byte[1024];
             stream.Read(fromServer, 0, fromServer.Length);
-            var trimEmptyBytes = _service.TrimEmptyBytes(fromServer);
+            var trimEmptyBytes = service.TrimEmptyBytes(fromServer);
             string s = Encoding.ASCII.GetString(trimEmptyBytes);
             Request response = JsonSerializer.Deserialize<Request>(s);
             return response;
@@ -488,7 +488,7 @@ namespace MainServerAPI.Network
 
             byte[] fromServer = new byte[1024];
             stream.Read(fromServer, 0, fromServer.Length);
-            var trimEmptyBytes = _service.TrimEmptyBytes(fromServer);
+            var trimEmptyBytes = service.TrimEmptyBytes(fromServer);
             string s = Encoding.ASCII.GetString(trimEmptyBytes);
             Request response = JsonSerializer.Deserialize<Request>(s);
             return response;
@@ -510,7 +510,7 @@ namespace MainServerAPI.Network
 
             byte[] fromServer = new byte[1024];
             stream.Read(fromServer, 0, fromServer.Length);
-            var trimEmptyBytes = _service.TrimEmptyBytes(fromServer);
+            var trimEmptyBytes = service.TrimEmptyBytes(fromServer);
             string s = Encoding.ASCII.GetString(trimEmptyBytes);
             Request request = JsonSerializer.Deserialize<Request>(s);
             return request.requestOperation;
