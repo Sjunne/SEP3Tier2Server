@@ -4,7 +4,7 @@ using MainServerAPI.Network;
 
 namespace SEP3Tier2Server.Data
 {
-    public class HelpService
+    public class DataService
     {
         public byte[] TrimEmptyBytes(byte[] array)
         {

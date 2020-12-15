@@ -20,10 +20,10 @@ namespace MainServerAPI.Network
 {
     public class NetworkSocket : INetwork
     {
-        private HelpService _service;
+        private DataService _service;
         public NetworkSocket()
         {
-            _service = new HelpService();
+            _service = new DataService();
         }
         
         public RequestOperationEnum updateProfile(ProfileData profile)
