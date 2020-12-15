@@ -13,11 +13,11 @@
         Warning GetWarning(String username);
         RequestOperationEnum RemoveWarning(String username);
 
-        byte[] GetCover(string username);
-        List<byte[]> GetPictures(string username);
+        string GetCover(string username);
+        string GetPictures(string username);
         RequestOperationEnum UploadImage(Request request);
         RequestOperationEnum UpdateCover(string pictureName);
-        byte[] GetProfilePicture(string username);
+        string GetProfilePicture(string username);
         RequestOperationEnum UpdateProfilePic(string pictureName);
         RequestOperationEnum editProfile(Request request);
         IList<Review> GetReviews(string username);

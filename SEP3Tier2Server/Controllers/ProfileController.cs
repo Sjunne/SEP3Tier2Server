@@ -94,8 +94,6 @@ using Microsoft.AspNetCore.Mvc;
             try
             {
                 
-                Console.WriteLine(profileData.preferences.nationality);
-                Console.WriteLine(profileData.username);
 
                 if (profileData == null)
                     return StatusCode(503);
@@ -119,8 +117,6 @@ using Microsoft.AspNetCore.Mvc;
             try
             {
                 
-                Console.WriteLine(profileData.preferences.nationality);
-                Console.WriteLine(profileData.username);
 
                 if (profileData == null)
                     return StatusCode(503);
@@ -168,8 +164,6 @@ using Microsoft.AspNetCore.Mvc;
             try
             {
                 profileData = _network.GetPreference(username);
-                Console.WriteLine(profileData.preferences.nationality);
-                Console.WriteLine(profileData.username);
 
                 if (profileData == null)
                     return StatusCode(503);

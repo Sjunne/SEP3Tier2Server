@@ -15,13 +15,13 @@ namespace SEP3Tier2Server
     {
         public static void Main(string[] args)
         {
-            Model model = new Model();
+            Algo al = new Algo();
             Thread t1 = new Thread(() =>
             {
 
                 while (true)
                 {
-                    model.FindMatches();
+                    al.FindMatches();
                     Thread.Sleep(600000); 
                 }
             });
