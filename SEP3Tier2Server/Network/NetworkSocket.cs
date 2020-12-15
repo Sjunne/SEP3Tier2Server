@@ -57,17 +57,8 @@ namespace MainServerAPI.Network
                 Username = ""
             });
             Request request = WriteAndReadFromServer(s);
-            string[] json= request.o.ToString().Split('}');
-            json[3] += "}";
-            /*foreach (var st in json)
-            {
-                Console.WriteLine(st);
-            }*/
-            char[] c= json[2].ToCharArray();
-           c[0] = '{';
-           json[2]=new string(c);
-           json[2] += "}";
-           ProfileData profileData = JsonSerializer.Deserialize<ProfileData>(json[2]);
+            var json = _service.SplitJson(request);
+            ProfileData profileData = JsonSerializer.Deserialize<ProfileData>(json[2]);
             
             profileData.self = JsonSerializer.Deserialize<Details>(json[3]);
             profileData.jsonSelf = json[3];
@@ -78,6 +69,8 @@ namespace MainServerAPI.Network
             
             return profileData;
         }
+
+        
 
         public IList<string> getAllProfiles()
         {
@@ -207,16 +200,10 @@ namespace MainServerAPI.Network
             return request1.requestOperation;
         }
 
-        public RequestOperationEnum UpdateCover(string pictureName)
+        public RequestOperationEnum UpdateCover(Request r)
         {
             var stream = NetworkStream();
-            string json = JsonSerializer.Serialize(new Request()
-            {
-                //TODO: RET UPDATECOVER
-                Username = "Maria",
-                o = pictureName,
-                requestOperation = RequestOperationEnum.UPDATECOVER
-            });
+            string json = JsonSerializer.Serialize(r);
             byte[] toServer = Encoding.ASCII.GetBytes(json);
             stream.Write(toServer, 0, toServer.Length);
 
@@ -258,17 +245,10 @@ namespace MainServerAPI.Network
             return _service.Base64ImagesToString(fromServer);
         }
 
-        public RequestOperationEnum UpdateProfilePic(string pictureName)
+        public RequestOperationEnum UpdateProfilePic(Request r)
         {
             var stream = NetworkStream();
-            string json = JsonSerializer.Serialize(new Request()
-            {
-                //TODO: ret at username er her
-                
-                Username = "Maria",
-                o = pictureName,
-                requestOperation = RequestOperationEnum.UPDATEPROFILEPIC
-            });
+            string json = JsonSerializer.Serialize(r);
             byte[] toServer = Encoding.ASCII.GetBytes(json);
             stream.Write(toServer, 0, toServer.Length);
 

@@ -98,9 +98,9 @@ namespace MainServerAPI.Controllers
 
         [HttpPost]
         [Route("UpdateCover")]
-        public async Task<ActionResult> UpdateCover([FromBody]string pictureName)
+        public async Task<ActionResult> UpdateCover([FromBody]Request request)
         {
-            RequestOperationEnum requestOperationEnum = _network.UpdateCover(pictureName);
+            RequestOperationEnum requestOperationEnum = _network.UpdateCover(request);
             if (requestOperationEnum == RequestOperationEnum.ERROR)
             {
                 return StatusCode(503);
@@ -111,9 +111,9 @@ namespace MainServerAPI.Controllers
         
         [HttpPost]
         [Route("UpdateProfilePic")]
-        public async Task<ActionResult> UpdateProfilePic([FromBody]string pictureName)
+        public async Task<ActionResult> UpdateProfilePic([FromBody]Request request)
         {
-            RequestOperationEnum requestOperationEnum = _network.UpdateProfilePic(pictureName);
+            RequestOperationEnum requestOperationEnum = _network.UpdateProfilePic(request);
             if (requestOperationEnum == RequestOperationEnum.ERROR)
             {
                 

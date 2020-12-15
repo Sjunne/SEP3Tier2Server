@@ -31,7 +31,7 @@ namespace SEP3Tier2Server.Data
             json[2] += "}";
             return json;
         }
-        
+
         public string Base64ImagesToString(List<byte[]> b)
         {
             string allImages = "";

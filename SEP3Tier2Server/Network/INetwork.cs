@@ -16,9 +16,9 @@
         string GetCover(string username);
         string GetPictures(string username);
         RequestOperationEnum UploadImage(Request request);
-        RequestOperationEnum UpdateCover(string pictureName);
+        RequestOperationEnum UpdateCover(Request request);
         string GetProfilePicture(string username);
-        RequestOperationEnum UpdateProfilePic(string pictureName);
+        RequestOperationEnum UpdateProfilePic(Request request);
         RequestOperationEnum editProfile(Request request);
         IList<Review> GetReviews(string username);
 
