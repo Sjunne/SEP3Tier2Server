@@ -7,17 +7,17 @@ using Microsoft.AspNetCore.Mvc;
 namespace MainServerAPI.Data
 
 {
-    public class Model
+    public class Algo
     {
         private INetwork network;
-        public Model()
+        public Algo()
         {
             network = new NetworkSocket();
+            
         }
         
         public void FindMatches()
         {
-            //LAV OM SÅ ALLE ER FOREACH, DATABASE SKAL HAVE CREATEMATCHES METODE
             IList<string> usernames = network.getAllProfiles();
             IList<ProfileData> profiles = new List<ProfileData>();
             foreach (string username in usernames)

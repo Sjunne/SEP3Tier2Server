@@ -15,17 +15,17 @@ namespace SEP3Tier2Server
     {
         public static void Main(string[] args)
         {
-            // Model model = new Model();
-            // Thread t1 = new Thread(() =>
-            // {
-            //
-            //     while (true)
-            //     {
-            //         model.FindMatches();
-            //         Thread.Sleep(600000); 
-            //     }
-            // });
-            // t1.Start();
+            Algo al = new Algo();
+            Thread t1 = new Thread(() =>
+            {
+
+                while (true)
+                {
+                    al.FindMatches();
+                    Thread.Sleep(600000); 
+                }
+            });
+            t1.Start();
             CreateHostBuilder(args).Build().Run();
         }
 

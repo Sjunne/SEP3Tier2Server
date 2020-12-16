@@ -29,11 +29,7 @@ namespace MainServerAPI.Controllers
             //returns coverpicture for user
             try
             {
-                Byte[] b = _network.GetCover(username);
-                var base64 = Convert.ToBase64String(b);
-                var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
-
-                return Ok(imgSrc);
+                return _network.GetCover(username);
             }
             catch (NetworkIssue e)
             {
@@ -54,10 +50,7 @@ namespace MainServerAPI.Controllers
 
             try
             {
-                Byte[] b = _network.GetProfilePicture(username);
-                var base64 = Convert.ToBase64String(b);
-                var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
-                return Ok(imgSrc);
+                return _network.GetProfilePicture(username);
 
             }
             catch (NetworkIssue e)
@@ -89,18 +82,9 @@ namespace MainServerAPI.Controllers
         public async Task<ActionResult<string>> GetPictures([FromQuery] string username)
         {
             try
-            { 
-                List<Byte[]> b = _network.GetPictures(username);
-                string allImages = "";
-                for (int i = 0; i < b.Count; i++)
-                {
-                    string image = Convert.ToBase64String(b[i]);
-                    string encoded = String.Format("data:image/gif;base64,{0}", image);
-                    allImages += encoded;
-                    allImages += "å";
-                }
+            {
 
-                return Ok(allImages);
+                return _network.GetPictures(username);
             }
             catch (ServiceUnavailable e)
             {
@@ -109,12 +93,14 @@ namespace MainServerAPI.Controllers
             }
 
         }
+
         
+
         [HttpPost]
         [Route("UpdateCover")]
-        public async Task<ActionResult> UpdateCover([FromBody]string pictureName)
+        public async Task<ActionResult> UpdateCover([FromBody]Request request)
         {
-            RequestOperationEnum requestOperationEnum = _network.UpdateCover(pictureName);
+            RequestOperationEnum requestOperationEnum = _network.UpdateCover(request);
             if (requestOperationEnum == RequestOperationEnum.ERROR)
             {
                 return StatusCode(503);
@@ -125,9 +111,9 @@ namespace MainServerAPI.Controllers
         
         [HttpPost]
         [Route("UpdateProfilePic")]
-        public async Task<ActionResult> UpdateProfilePic([FromBody]string pictureName)
+        public async Task<ActionResult> UpdateProfilePic([FromBody]Request request)
         {
-            RequestOperationEnum requestOperationEnum = _network.UpdateProfilePic(pictureName);
+            RequestOperationEnum requestOperationEnum = _network.UpdateProfilePic(request);
             if (requestOperationEnum == RequestOperationEnum.ERROR)
             {
                 

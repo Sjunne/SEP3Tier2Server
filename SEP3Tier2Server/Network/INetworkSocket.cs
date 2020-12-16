@@ -2,20 +2,24 @@
  using System.Collections.Generic;
  using System.Threading.Tasks;
  using MainServerAPI.Data;
+ using WebApplication.Data;
 
-namespace MainServerAPI.Network
+ namespace MainServerAPI.Network
 {
     public interface INetwork
     {
         RequestOperationEnum updateProfile(ProfileData profile);
         ProfileData GetProfile(string username);
 
-        byte[] GetCover(string username);
-        List<byte[]> GetPictures(string username);
+        Warning GetWarning(String username);
+        RequestOperationEnum RemoveWarning(String username);
+
+        string GetCover(string username);
+        string GetPictures(string username);
         RequestOperationEnum UploadImage(Request request);
-        RequestOperationEnum UpdateCover(string pictureName);
-        byte[] GetProfilePicture(string username);
-        RequestOperationEnum UpdateProfilePic(string pictureName);
+        RequestOperationEnum UpdateCover(Request request);
+        string GetProfilePicture(string username);
+        RequestOperationEnum UpdateProfilePic(Request request);
         RequestOperationEnum editProfile(Request request);
         IList<Review> GetReviews(string username);
 
