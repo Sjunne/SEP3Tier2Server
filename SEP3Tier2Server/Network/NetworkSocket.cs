@@ -100,18 +100,20 @@ namespace MainServerAPI.Network
         {
             var stream = NetworkStream();
             
+            //Serializes Request Object
             string s = JsonSerializer.Serialize<Request>(new Request()
             {
                 Username =  username,
                 requestOperation = RequestOperationEnum.COVER
             });
-            
+            //Converts to byte Array
             byte[] dataToServer = Encoding.ASCII.GetBytes(s);
+            //Writes to Tier3
             stream.Write(dataToServer, 0, dataToServer.Length);
-            
-            
+            //Waits for respond (picture, so large array)
             byte[] fromServer = new byte[1024*1024];
             int read = stream.Read(fromServer, 0, fromServer.Length);
+            
             if (read == 1)
             {
                 throw new NetworkIssue("Cover picture not found");
@@ -583,12 +585,6 @@ namespace MainServerAPI.Network
             stream.Write(dataToServer, 0, dataToServer.Length);
         }
 
-
-        //private methods 
-        
-        
-        
-        
         public IList<String> Matches(string username)
         {
             string s = JsonSerializer.Serialize(new Request
@@ -644,7 +640,7 @@ namespace MainServerAPI.Network
         }
         
         
-        private static NetworkStream NetworkStream()
+        private NetworkStream NetworkStream()
         {
             NetworkStream stream;
 

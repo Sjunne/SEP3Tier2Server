@@ -54,7 +54,6 @@ namespace MainServerAPI.Controllers
                 Console.WriteLine(e.Message + "123");
                 return StatusCode(500, e.Message);
             }
-            
             return Ok(profileData);
         }
         

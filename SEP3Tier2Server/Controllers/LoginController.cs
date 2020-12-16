@@ -35,12 +35,10 @@ namespace MainServerAPI.Controllers
                 {
                     return StatusCode(503, request.o);
                 }
-                
                 return Ok(request);
             }
             catch (ServiceUnavailable e)
             {
-                //kaster aldrig denne metode, hvad skal jeg så?
                 return StatusCode(503, e.Message);
             }
         }
@@ -49,7 +47,6 @@ namespace MainServerAPI.Controllers
         public async Task<ActionResult<Request>> RegisterUser ([FromBody] Request request)
         {
             Request response = _network.RegisterUser(request);
-            
             if (request.requestOperation == RequestOperationEnum.ERROR)
             {
                 return StatusCode(503, response);

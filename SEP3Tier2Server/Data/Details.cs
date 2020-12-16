@@ -1,6 +1,6 @@
 ﻿﻿namespace MainServerAPI.Data
 {
-    public class Details : IDetails
+    public class Details
     {
         public string hairColor { get; set; }
         public string skinColor { get; set; }
